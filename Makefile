@@ -9,7 +9,7 @@ SRC := $(addprefix $(SRC_DIR), main.c)
 OBJ_DIR := .obj/
 OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
-MLX_DIR := minilibx-linux/
+MLX_DIR := mlx/
 MLX := $(MLX_DIR)libmlx_Linux.a
 MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
 
