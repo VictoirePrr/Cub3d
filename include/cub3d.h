@@ -12,31 +12,50 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# define WALL_XPM "sprites/blue.xpm"
+# define FLOOR_XPM "sprites/red.xpm"
+
+# define XPM_HEIGHT 64
+# define XPM_WIDTH 64
+
 # define ESC 65307
 # define UP 65362
 # define RIGHT 65363
 # define LEFT 65361
 # define DOWN 65364
 
+# define WALL '1'
+# define FLOOR '0'
+
 # define W 119
 # define A 97
 # define S 115
 # define D 100
 
-// typedef struct s_matrix
-// {
-// 	char		**map;
-// 	size_t		htl;
-// 	size_t		vtl;
-// }				t_matrix;
+typedef struct s_img
+{
+	void		*image;
+	int			width;
+	int			height;
+
+}				t_img;
+
+typedef struct s_matrix
+{
+	char		**map;
+	size_t		htl;
+	size_t		vtl;
+}				t_matrix;
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	int		start_x;
-	int		start_y;
-	// t_matrix	*matrix;
-}			t_data;
+	void		*mlx;
+	void		*win;
+	int			start_x;
+	int			start_y;
+	t_matrix	matrix;
+	t_img		floor;
+	t_img		wall;
+}				t_data;
 
 #endif
