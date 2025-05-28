@@ -1,6 +1,6 @@
 #include "pars.h"
 
-int	is_map_line(char *line)
+int	map_line(char *line)
 {
 	int	i;
 
@@ -42,4 +42,15 @@ void	parse_color(char *color_str, t_colors *color)
 	color->b = b;
 
 	free_split(rgb);
+}
+
+void	exit_error(char *str)
+{
+	printf("Error : %s\n", str);
+	exit(1);
+}
+
+void parse_map(char *line)
+{
+	return ;
 }

@@ -16,12 +16,6 @@ int	empty_line(char *line)
 	return (1);
 }
 
-void	exit_error(char *str)
-{
-	printf("Error : %s\n", str);
-	exit(1);
-}
-
 int	check_config(char *line)
 {
 	char	*trimmed;
@@ -38,7 +32,7 @@ int	check_config(char *line)
 	return (result);
 }
 
-void	parse_config_line(char *line, t_game *game)
+void	parse_config(char *line, t_game *game)
 {
 	char	**tokens;
 	char	*trimmed;
@@ -47,42 +41,44 @@ void	parse_config_line(char *line, t_game *game)
 	tokens = ft_split(trimmed, ' ');
 	free(trimmed);
 	if (!tokens || !tokens[0] || !tokens[1])
-		//exit_error("Invalid configuration line");
-	if (ft_strcmp(tokens[0], "NO") == 0)
 	{
-		if (game->textures->north)
-			//exit_error("Duplicate north texture");
-		game->textures->north = ft_strdup(tokens[1]);
-	}
-	else if (ft_strcmp(tokens[0], "SO") == 0)
-	{
-		if (game->textures->south)
-			//exit_error("Duplicate south texture");
-		game->textures->south = ft_strdup(tokens[1]);
-	}
-	else if (ft_strcmp(tokens[0], "WE") == 0)
-	{
-		if (game->textures->west)
-			//exit_error("Duplicate west texture");
-		game->textures->west = ft_strdup(tokens[1]);
-	}
-	else if (ft_strcmp(tokens[0], "EA") == 0)
-	{
-		if (game->textures->east)
-			//exit_error("Duplicate east texture");
-		game->textures->east = ft_strdup(tokens[1]);
-	}
-	else if (ft_strcmp(tokens[0], "F") == 0)
-	{
-		if (game->floor)
-			//exit_error("Duplicate floor color");
-		parse_color(tokens[1], &game->floor);
-	}
-	else if (ft_strcmp(tokens[0], "C") == 0)
-	{
-		if (game->roof)
-			//exit_error("Duplicate roof color");
-		parse_color(tokens[1], &game->roof);
+		// exit_error("Invalid configuration line");
+		if (ft_strcmp(tokens[0], "NO") == 0)
+		{
+			if (game->textures->north)
+				// exit_error("Duplicate north texture");
+				game->textures->north = ft_strdup(tokens[1]);
+		}
+		else if (ft_strcmp(tokens[0], "SO") == 0)
+		{
+			if (game->textures->south)
+				// exit_error("Duplicate south texture");
+				game->textures->south = ft_strdup(tokens[1]);
+		}
+		else if (ft_strcmp(tokens[0], "WE") == 0)
+		{
+			if (game->textures->west)
+				// exit_error("Duplicate west texture");
+				game->textures->west = ft_strdup(tokens[1]);
+		}
+		else if (ft_strcmp(tokens[0], "EA") == 0)
+		{
+			if (game->textures->east)
+				// exit_error("Duplicate east texture");
+				game->textures->east = ft_strdup(tokens[1]);
+		}
+		else if (ft_strcmp(tokens[0], "F") == 0)
+		{
+			if (game->floor)
+				// exit_error("Duplicate floor color");
+				parse_color(tokens[1], game->floor);
+		}
+		else if (ft_strcmp(tokens[0], "C") == 0)
+		{
+			if (game->roof)
+				// exit_error("Duplicate roof color");
+				parse_color(tokens[1], game->roof);
+		}
 	}
 	free_split(tokens);
 }
@@ -90,8 +86,8 @@ void	parse_config_line(char *line, t_game *game)
 int	validate_config(t_game *game)
 {
 	return (game->textures->north && game->textures->south
-		&& game->textures->west && game->textures->east && game->floor
-		&& game->roof);
+		&& game->textures->west && game->textures->east && game->floor != NULL
+		&& game->roof != NULL);
 }
 
 int	parse_file(char *filename, t_game *game)
@@ -121,11 +117,28 @@ int	parse_file(char *filename, t_game *game)
 				{
 					parse_config(line, game);
 					config_count++;
+					if (config_count == 6)
+					{
+						if (!validate_config)
+						 exit_error("Error Config"); //leaks 
+					}
 				}
 			}
+			else if (map_line(line))
+			{
+				if(config_count != 6)
+					exit_error("Error Config"); //leaks 
+				map_start = 1;
+				parse_map(line);
+			}
+			else
+				exit_error("Error line format"); //leaks 
 		}
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
+	if (config_count != 6)
+		exit_error("Missing configuration elements"); //leaks
+	return (0);
 }

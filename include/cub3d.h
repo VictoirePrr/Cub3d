@@ -28,7 +28,7 @@ typedef struct s_data
 	void *win_ptr;
 	struct s_map *map;
 
-};		t_data;
+}		t_data;
 
 
 #endif
