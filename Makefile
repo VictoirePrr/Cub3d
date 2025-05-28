@@ -1,7 +1,7 @@
 NAME    =  cub3d
 
 CC := gcc
-CCFLAGS := -Wextra -Wall -Werror -g3
+CCFLAGS := -Wextra -Wall -Werror -g3 -arch arm64
 SRC_DIR := src/
 INCLUDES:= include/
 SRC := $(addprefix $(SRC_DIR), main.c)
@@ -10,8 +10,10 @@ OBJ_DIR := .obj/
 OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 MLX_DIR := mlx/
-MLX := $(MLX_DIR)libmlx_Linux.a
-MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
+# MLX := $(MLX_DIR)libmlx_Linux.a
+MLX := $(MLX_DIR)libmlx_Darwin.a
+# MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
+MLX_FLAG := -Lmlx -lmlx -L/usr/X11/lib -I/usr/X11/include -lX11 -lXext -lm
 
 LIBFT_DIR := libft/
 LIBFT := $(LIBFT_DIR)libft.a 

@@ -1,10 +1,11 @@
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
 # include "libft.h"
 # include "mlx.h"
-# include <X11/X.h>
-# include <X11/keysym.h>
+// # include <X11/X.h>
+// # include <X11/keysym.h>
 # include <fcntl.h>
 # include <stdint.h>
 # include <stdio.h>
@@ -21,5 +22,21 @@
 # define A 97
 # define S 115
 # define D 100
+
+// typedef struct s_matrix
+// {
+// 	char		**map;
+// 	size_t		htl;
+// 	size_t		vtl;
+// }				t_matrix;
+
+typedef struct s_data
+{
+	void	*mlx;
+	void	*win;
+	int		start_x;
+	int		start_y;
+	// t_matrix	*matrix;
+}			t_data;
 
 #endif
