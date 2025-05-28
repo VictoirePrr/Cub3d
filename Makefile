@@ -4,9 +4,21 @@ CC := gcc
 CCFLAGS := -Wextra -Wall -Werror -g3
 SRC_DIR := src/
 INCLUDES:= include/
-PARS_DIR := $(SRC_DIR)parsing/
+
+# Fichiers sources
+SRC := $(addprefix $(SRC_DIR), \
+	main.c \
+	error.c \
+	cleanup.c \
+	init.c \
+	parse_color.c \
+	parse_config.c \
+	parse_file.c \
+	tools.c \
+	check_map.c)
 
 OBJ_DIR := .obj/
+OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 MLX_DIR := mlx/
 MLX := $(MLX_DIR)libmlx_Linux.a
@@ -16,22 +28,9 @@ LIBFT_DIR := libft/
 LIBFT := $(LIBFT_DIR)libft.a 
 LIBFT_FLAG := -L $(LIBFT_DIR) $(LIBFT)
 
-
 HEADERS:= -I $(INCLUDES) -I $(MLX_DIR) -I $(LIBFT_DIR)
 
-
-SRC := $(addprefix $(SRC_DIR), main.c)
-
-PARS_SRC := $(addprefix $(PARS_DIR), \
-	check_map.c \
-	tools.c \
-)
-
-SRC += $(PARS_SRC)
-OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
-
 # Colors
-
 DEF_COLOR = \033[0;39m
 GRAY = \033[0;90m
 RED = \033[0;91m
@@ -46,9 +45,8 @@ PURPLE=\033[35m
 $(NAME): $(OBJ)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
-	$(CC) $(CCFLAGS) $(OBJ)  $(MLX_FLAG) $(LIBFT_FLAG) -o $(NAME)
-	$(CC) $(CCFLAGS) $(OBJ)  $(MLX_FLAG) $(LIBFT_FLAG) -o $(NAME)
-	 @echo "$(PURPLE) ✨ $(NAME) COMPILED ✨$(DEF_COLOR)"
+	$(CC) $(CCFLAGS) $(OBJ) $(MLX_FLAG) $(LIBFT_FLAG) -o $(NAME)
+	@echo "$(PURPLE) ✨ $(NAME) COMPILED ✨$(DEF_COLOR)"
 	$(MAKE) kitty
 	
 all: $(NAME)
@@ -78,7 +76,6 @@ kitty:
 	@echo									⠀⠀⠀⠀⠀⠀⠀⠙⠻⠷⠶⠿⠟⠋⠹⣷⣤⣀⡀⠄⣡⣀⣠⣴⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 	@echo									⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣍⣉⣻⣏⣉⣡⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 	@echo									⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀
-
 
 clean:
 	rm -rf $(OBJ_DIR)
