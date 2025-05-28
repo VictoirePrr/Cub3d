@@ -8,7 +8,6 @@ typedef struct s_map
 	char		**grid;
 	int			width;
 	int			height;
-
 }				t_map;
 
 typedef struct s_textures
@@ -42,20 +41,40 @@ typedef struct s_game
 	t_player	*player;
 }				t_game;
 
-//////////////////PARSING//////////////////////////////////////
+// ============== ERROR.C ==============
+int				print_error(char *str);
+int				exit_error_cleanup(t_game *game, char *str, int fd);
+int				exit_error(t_game *game, char *str);
+int				error_return(char *str);
+int				error_return_line(char *str, char *line, int fd);
 
-//////////////////tools.c//////////////////////////////////////////
+// ============== CLEANUP.C ==============
+void			free_split(char **split);
+void			cleanup_textures(t_textures *textures);
+void			cleanup_map(t_map *map);
+void			cleanup_game(t_game *game);
+
+// ============== INIT.C ==============
+t_game			*init_game(void);
+
+// ============== PARSE_COLOR.C ==============
+int				parse_color_secure(char *color_str, t_colors *color,
+					t_game *game);
+
+// ============== PARSE_CONFIG.C ==============
+int				parse_config_secure(char *line, t_game *game);
+int				validate_config_secure(t_game *game);
+
+// ============== PARSE_FILE.C ==============
+int				parse_file_secure(char *filename, t_game *game);
+
+// ============== TOOLS.C  ==============
 int				map_line(char *line);
 int				is_player_char(char c);
-void			parse_color(char *color_str, t_colors *color);
-void			exit_error(char *str);
 void			parse_map(char *line);
 
-///////////////check_map.c///////////////////////////////////////////
+// ============== CHECK_MAP.C==============
 int				empty_line(char *line);
 int				check_config(char *line);
-void			parse_config(char *line, t_game *game);
-int				validate_config(t_game *game);
-int				parse_file(char *filename, t_game *game);
 
 #endif
