@@ -22,4 +22,13 @@
 # define S 115
 # define D 100
 
+typedef struct s_data
+{
+	void *mlx_otr;
+	void *win_ptr;
+	struct s_map *map;
+
+};		t_data;
+
+
 #endif
