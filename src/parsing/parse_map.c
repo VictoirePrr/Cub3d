@@ -66,11 +66,11 @@ int	find_player(t_game *game)
 	int	player_count;
 
 	player_count = 0;
-	i = 0;
-	while (i < game->map->height)
+	i = -1;
+	while (++i < game->map->height)
 	{
-		j = 0;
-		while (j < game->map->width)
+		j = -1;
+		while (++j < game->map->width)
 		{
 			if (is_player_char(game->map->grid[i][j]))
 			{
@@ -81,9 +81,7 @@ int	find_player(t_game *game)
 			}
 			else if (!validate_char(game->map->grid[i][j]))
 				return (error_return("Invalid character in map"));
-			j++;
 		}
-		i++;
 	}
 	if (player_count != 1)
 		return (error_return("Map must have exactly one player"));
@@ -131,8 +129,8 @@ int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 
 int	finalize_map_parsing(t_game *game, t_map_line *map_lines)
 {
-	if (!map_lines)
-		return (error_return("Empty map"));
+	// if (!map_lines)
+	// 	return (error_return("Empty map"));
 	game->map->height = count_map_lines(map_lines);
 	game->map->width = get_max_width(map_lines);
 	if (game->map->height < 3 || game->map->width < 3)

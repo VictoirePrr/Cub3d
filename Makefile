@@ -1,35 +1,40 @@
 NAME    =  cub3d
-
 CC := gcc
 CCFLAGS := -Wextra -Wall -Werror -g3
 SRC_DIR := src/
+PARSING_DIR := src/parsing/
 INCLUDES:= include/
 
-# Fichiers sources
 SRC := $(addprefix $(SRC_DIR), \
 	main.c \
-	error.c \
-	cleanup.c \
-	init.c \
+	mlx_init.c \
+	)
+
+PARSING_SRC := $(addprefix $(PARSING_DIR), \
 	parse_color.c \
 	parse_config.c \
 	parse_file.c \
-	tools.c \
-	check_map.c\
 	parse_map.c \
+	check_map.c \
+	error.c \
+	cleanup.c \
+	init.c \
+	tools.c \
 	free.c\
 	utils.c \
 	)
 
+ALL_SRC := $(SRC) $(PARSING_SRC)
+
 OBJ_DIR := .obj/
-OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o) $(PARSING_SRC:$(PARSING_DIR)%.c=$(OBJ_DIR)parsing/%.o)
 
 MLX_DIR := mlx/
 MLX := $(MLX_DIR)libmlx_Linux.a
 MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
 
 LIBFT_DIR := libft/
-LIBFT := $(LIBFT_DIR)libft.a 
+LIBFT := $(LIBFT_DIR)libft.a
 LIBFT_FLAG := -L $(LIBFT_DIR) $(LIBFT)
 
 HEADERS:= -I $(INCLUDES) -I $(MLX_DIR) -I $(LIBFT_DIR)
@@ -52,7 +57,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CCFLAGS) $(OBJ) $(MLX_FLAG) $(LIBFT_FLAG) -o $(NAME)
 	@echo "$(PURPLE) ✨ $(NAME) COMPILED ✨$(DEF_COLOR)"
 	$(MAKE) kitty
-	
+
 all: $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
@@ -60,26 +65,10 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
 	$(CC) $(CCFLAGS) $(HEADERS) -c $< -o $@
 
-kitty:
-	@echo									⠀⠀⠀⠀⠀⠀⢀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⡀⣰⡿⠛⠛⠿⢶⣦⣀⠀⢀⣀⣀⣀⣀⣠⡾⠋⠀⠀⠹⣷⣄⣤⣶⡶⠿⠿⣷⡄⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⢰⣿⠁⠀⠀⠀⠀⠈⠙⠛⠛⠋⠉⠉⢹⡟⠁⠀⠀⣀⣀⠘⣿⠉⠀⠀⠀⠀⠘⣿⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠁⠀⠀⣾⡋⣽⠿⠛⠿⢶⣤⣤⣤⣤⣿⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⢸⣿⡴⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣄⡀⠀⢈⣻⡏⠀⠀⠀⠀⣿⣀⠀⠈⠙⣷⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⣰⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠛⠙⢷⣄⣀⣀⣼⣏⣿⠀⠀⢀⣿⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⢸⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⣿⡉⠉⠁⢀⣠⣿⡇⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠗⠾⠟⠋⢹⣷⠀⠀⠀⠀
-	@echo									⢀⣤⣤⣤⣿⣤⣄⠀⠀⠀⠴⠚⠲⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⡆⠀⠀⠀⠀⢀⣈⣿⣀⣀⡀⠀
-	@echo									⠀⠀⠀⠈⣿⣠⣾⠟⠛⢷⡄⠀⠀⠀⠀⠀⠀⠀⡤⠶⢦⡀⠀⠀⠀⠀⠹⠯⠃⠀⠀⠀⠈⠉⢩⡿⠉⠉⠉⠁
-	@echo									⠀⠀⣤⡶⠿⣿⣇⠀⠀⠸⣷⠀⠀⠀⠀⠀⠀⠀⠓⠶⠞⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢤⣼⣯⣀⣀⠀⠀
-	@echo									⠀⢰⣯⠀⠀⠈⠻⠀⠀⠀⣿⣶⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡿⠁⠉⠉⠁⠀
-	@echo									⠀⠀⠙⣷⣄⠀⠀⠀⠀⠀⢀⣀⣀⠙⢿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣿⡿⢷⣄⡀⠀⠀⠀
-	@echo									⠀⠀⠀⠈⠙⣷⠀⠀⠀⣴⠟⠉⠉⠀⠀⣿⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣠⣤⣾⠟⠉⠀⠀⠈⠉⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠰⣿⠀⠀⠀⠙⢧⣤⡶⠟⢀⣿⠛⢟⡟⡯⠽⢶⡶⠾⢿⣻⣏⣹⡏⣁⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⠹⣷⣄⠀⠀⠀⠀⠀⣠⣾⠏⠀⠀⠙⠛⠛⠋⠀⠀⢀⣽⠟⠛⠖⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⠀⠀⠙⠻⠷⠶⠿⠟⠋⠹⣷⣤⣀⡀⠄⣡⣀⣠⣴⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠳⣍⣉⣻⣏⣉⣡⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-	@echo									⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀
+$(OBJ_DIR)parsing/%.o: $(PARSING_DIR)%.c
+	@mkdir -p $(OBJ_DIR)parsing
+	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
+	$(CC) $(CCFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
