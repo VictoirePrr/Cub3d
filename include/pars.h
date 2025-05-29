@@ -48,9 +48,6 @@ typedef struct s_map_line
 }						t_map_line;
 
 
-int	check_position(t_game *game, int i, int j);
-
-
 // ============== ERROR.C ==============
 int						print_error(char *str);
 int						exit_error_cleanup(t_game *game, char *str, int fd);

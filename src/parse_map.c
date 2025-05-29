@@ -2,16 +2,17 @@
 
 static void	print_map_debug(t_game *game)
 {
+	char	c;
+
 	int i, j;
-	
-	ft_printf("\n  PARSED MAP (size: %dx%d):\n", game->map->width, game->map->height);
+	ft_printf("\n  PARSED MAP (size: %dx%d):\n", game->map->width,
+		game->map->height);
 	ft_printf("\n");
-	
 	for (i = 0; i < game->map->height; i++)
 	{
 		for (j = 0; j < game->map->width; j++)
 		{
-			char c = game->map->grid[i][j];
+			c = game->map->grid[i][j];
 			if (c == ' ')
 				ft_printf("·");
 			else
@@ -97,9 +98,10 @@ int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 	t_map_line	*new_line;
 
 	map_lines = create_map_line(old_line);
+	free(old_line);
 	if (!map_lines)
 		return (error_return("Memory allocation failed"));
-	line = get_next_line(fd); //bug no read de la first line
+	line = get_next_line(fd);
 	while (line != NULL)
 	{
 		if (!empty_line(line))

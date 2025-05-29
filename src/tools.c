@@ -23,7 +23,7 @@ int	is_player_char(char c)
 
 int	is_wall_or_space(char c)
 {
-	return (c == '1' || c == ' ');
+	return (c == '1' || c == ' ' || is_player_char(c) || c == '0');
 }
 
 int	validate_borders(t_game *game)
