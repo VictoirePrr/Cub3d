@@ -15,7 +15,11 @@ SRC := $(addprefix $(SRC_DIR), \
 	parse_config.c \
 	parse_file.c \
 	tools.c \
-	check_map.c)
+	check_map.c\
+	parse_map.c \
+	free.c\
+	utils.c \
+	)
 
 OBJ_DIR := .obj/
 OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)

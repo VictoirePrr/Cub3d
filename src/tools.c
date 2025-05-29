@@ -21,8 +21,31 @@ int	is_player_char(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-void parse_map(char *line)
+int	is_wall_or_space(char c)
 {
-	(void)line;
-	return ;
+	return (c == '1' || c == ' ');
+}
+
+int	validate_borders(t_game *game)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < game->map->height)
+	{
+		j = 0;
+		while (j < game->map->width)
+		{
+			if (game->map->grid[i][j] == '0'
+				|| is_player_char(game->map->grid[i][j]))
+			{
+				if (check_position(game, i, j) != 0)
+					return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }

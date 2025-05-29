@@ -22,8 +22,7 @@ int	handle_config_line(char *line, t_game *game, int *config_count)
 	return (0);
 }
 
-int	process_line(char *line, t_game *game, int *map_start,
-	int *config_count)
+int	process_line(char *line, t_game *game, int *map_start, int *config_count)
 {
 	if (empty_line(line))
 		return (0);
@@ -36,7 +35,7 @@ int	process_line(char *line, t_game *game, int *map_start,
 			if (*config_count != 6)
 				return (error_return("Map found before all configs"));
 			*map_start = 1;
-			return (0);
+			return (2);
 		}
 		else
 			return (error_return("Invalid line format"));
@@ -56,24 +55,37 @@ int	parse_file_secure(char *filename, t_game *game)
 	int		fd;
 	int		map_start;
 	int		config_count;
+	int		result;
 
 	if (!validate_filename(filename))
-		return (exit_error(game, "Invalid file extension"));
+		return (error_return("Invalid file extension"));
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		return (exit_error(game, "Cannot open file"));
+		return (error_return("Cannot open file"));
 	map_start = 0;
 	config_count = 0;
 	line = get_next_line(fd);
-	while (line != NULL)
+	while (line != NULL && !map_start)
 	{
-		if (process_line(line, game, &map_start, &config_count) != 0)
+		result = process_line(line, game, &map_start, &config_count);
+		if (result == 1)
 			return (error_return_line("Parsing error", line, fd));
+		else if (result == 2)
+		{
+			free(line);
+			if (parse_map_from_fd(fd, game) != 0)
+			{
+				close(fd);
+				return (1);
+			}
+			close(fd);
+			return (0);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
 	if (config_count != 6)
-		return (exit_error(game, "Missing configuration elements"));
-	return (0);
+		return (error_return("Missing configuration elements"));
+	return (error_return("No map found"));
 }

@@ -6,7 +6,7 @@
 /*   By: pnaessen <pnaessen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 14:33:06 by vicperri          #+#    #+#             */
-/*   Updated: 2025/03/10 10:19:07 by pnaessen         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 12:18:11 by pnaessen         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ long	ft_atoi(const char *nptr)
 			return (-1);
 		else if (((nb * 10) + (nptr[i] - '0')) > LONG_LONG_INT
 			&& sign == -1)
-			return (0);
+			return (-1);
 		nb = nb * 10 + (nptr[i++] - '0');
 	}
 	return (nb * sign);
