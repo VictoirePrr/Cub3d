@@ -32,6 +32,14 @@
 # define S 115
 # define D 100
 
+typedef struct s_keys
+{
+	int			up;
+	int			down;
+	int			left;
+	int			right;
+}				t_keys;
+
 typedef struct s_img
 {
 	void		*image;
@@ -51,11 +59,12 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	int			start_x;
-	int			start_y;
+	float			start_x;
+	float			start_y;
 	t_matrix	matrix;
 	t_img		floor;
 	t_img		wall;
+	t_keys		keys;
 }				t_data;
 
 #endif

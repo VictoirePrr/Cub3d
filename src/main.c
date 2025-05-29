@@ -17,50 +17,20 @@ void	free_all(char **matrix)
 	matrix = NULL;
 }
 
-char	*dup_temp(const char *s1)
-{
-	size_t	size;
-	char	*dup;
-	size_t	i;
-	size_t	j;
-
-	if (!s1)
-		return (0);
-	size = ft_strlen(s1) + 1;
-	dup = calloc(size, sizeof(char));
-	i = 0;
-	j = 0;
-	if (!(dup))
-		return (0);
-	while (s1[i])
-	{
-		if (s1[i] != '\n')
-		{
-			dup[j] = s1[i];
-			j++;
-		}
-		i++;
-	}
-	return (dup);
-}
-
 int	closing_game(t_data *data)
 {
-	if (data)
+	if (data->wall.image)
+		mlx_destroy_image(data->mlx, data->wall.image);
+	if (data->floor.image)
+		mlx_destroy_image(data->mlx, data->floor.image);
+	if (data->matrix.map)
+		free_all(data->matrix.map);
+	if (data->mlx && data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	if (data->mlx)
 	{
-		if (data->wall.image)
-			mlx_destroy_image(data->win, data->wall.image);
-		if (data->floor.image)
-			mlx_destroy_image(data->win, data->floor.image);
-		if (data->matrix.map)
-			free_all(data->matrix.map);
-		if (data->mlx && data->win)
-			mlx_destroy_window(data->mlx, data->win);
-		if (data->mlx)
-		{
-			mlx_destroy_display(data->mlx);
-			free(data->mlx);
-		}
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
 	}
 	ft_printf("Game closed\n");
 	exit(0);
@@ -97,6 +67,131 @@ void	set_up_game(t_data *data)
 		y++;
 	}
 	// play_game(data);
+}
+
+void	update_player_pos(t_data *data, int color)
+{
+	int		x;
+	int		player_size;
+	int		y;
+	float	new_x;
+	float	new_y;
+
+	new_x = data->start_x;
+	new_y = data->start_y;
+	player_size = 10;
+	y = 0;
+	while (y < player_size)
+	{
+		x = 0;
+		while (x < player_size)
+		{
+			mlx_pixel_put(data->mlx, data->win, (int)(new_x + x), (int)(new_y
+					+ y), color);
+			x++;
+		}
+		y++;
+	}
+}
+
+int	key_press(int key, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (key == ESC)
+		closing_game(data);
+	else if (key == UP || key == W)
+		data->keys.up = 1;
+	else if (key == DOWN || key == S)
+		data->keys.down = 1;
+	else if (key == LEFT || key == A)
+		data->keys.left = 1;
+	else if (key == RIGHT || key == D)
+		data->keys.right = 1;
+	return (0);
+}
+
+int	key_release(int key, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (key == UP || key == W)
+		data->keys.up = 0;
+	else if (key == DOWN || key == S)
+		data->keys.down = 0;
+	else if (key == LEFT || key == A)
+		data->keys.left = 0;
+	else if (key == RIGHT || key == D)
+		data->keys.right = 0;
+	return (0);
+}
+
+int	update_player(void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (data->keys.up)
+		data->start_y -= 1;
+	if (data->keys.down)
+		data->start_y += 1;
+	if (data->keys.left)
+		data->start_x -= 1;
+	if (data->keys.right)
+		data->start_x += 1;
+	set_up_game(data);
+	update_player_pos(data, 0x00FF00);
+	return (0);
+}
+
+void	draw_player(t_data *data)
+{
+	int	x;
+	int	player_size;
+	int	y;
+
+	player_size = 10;
+	x = 0;
+	while (x < player_size)
+	{
+		y = 0;
+		while (y < player_size)
+		{
+			mlx_pixel_put(data->mlx, data->win, data->start_x + x, data->start_y
+				+ y, 0x00FF00);
+			y++;
+		}
+		x++;
+	}
+}
+
+char	*dup_temp(const char *s1)
+{
+	size_t	size;
+	char	*dup;
+	size_t	i;
+	size_t	j;
+
+	if (!s1)
+		return (0);
+	size = ft_strlen(s1) + 1;
+	dup = calloc(size, sizeof(char));
+	i = 0;
+	j = 0;
+	if (!(dup))
+		return (0);
+	while (s1[i])
+	{
+		if (s1[i] != '\n')
+		{
+			dup[j] = s1[i];
+			j++;
+		}
+		i++;
+	}
+	return (dup);
 }
 
 char	**fill_the_matrix(const char *file, t_matrix *matrix)
@@ -159,84 +254,7 @@ char	**read_map(const char *file, t_matrix *matrix)
 	return (matrix->map);
 }
 
-void	update_player_pos(t_data *data, int color)
-{
-	int	x;
-	int	player_size;
-	int	y;
-	int	new_x;
-	int	new_y;
-
-	new_x = data->start_x;
-	new_y = data->start_y;
-	player_size = 10;
-	y = 0;
-	while (y < player_size)
-	{
-		x = 0;
-		while (x < player_size)
-		{
-			mlx_pixel_put(data->mlx, data->win, new_x + x, new_y + y, color);
-			x++;
-		}
-		y++;
-	}
-}
-
-int	get_key(int key, void *param)
-{
-	t_data	*data;
-
-	data = (t_data *)param;
-	if (key == UP || key == W)
-	{
-		update_player_pos(data, 0x000000);
-		data->start_y -= 1;
-		update_player_pos(data, 0x00FF00);
-	}
-	else if (key == DOWN || key == S)
-	{
-		update_player_pos(data, 0x000000);
-		data->start_y += 1;
-		update_player_pos(data, 0x00FF00);
-	}
-	else if (key == LEFT || key == A)
-	{
-		update_player_pos(data, 0x000000);
-		data->start_x -= 1;
-		update_player_pos(data, 0x00FF00);
-	}
-	else if (key == RIGHT || key == D)
-	{
-		update_player_pos(data, 0x000000);
-		data->start_x += 1;
-		update_player_pos(data, 0x00FF00);
-	}
-	return (0);
-}
-
-void	draw_player(t_data *data)
-{
-	int	x;
-	int	player_size;
-	int	y;
-
-	player_size = 10;
-	x = 0;
-	while (x < player_size)
-	{
-		y = 0;
-		while (y < player_size)
-		{
-			mlx_pixel_put(data->mlx, data->win, data->start_x + x, data->start_y
-				+ y, 0x00FF00);
-			y++;
-		}
-		x++;
-	}
-}
-
-t_img	put_xpm_to_win(void *xvar, char *xpm, t_img *img)
+t_img	put_xpm_to_img(void *xvar, char *xpm, t_img *img)
 {
 	img->width = XPM_WIDTH;
 	img->height = XPM_HEIGHT;
@@ -250,10 +268,10 @@ void	init_img(t_data *data, t_img *img)
 {
 	data->wall.image = NULL;
 	data->floor.image = NULL;
-	data->wall = put_xpm_to_win(data->mlx, WALL_XPM, img);
+	data->wall = put_xpm_to_img(data->mlx, WALL_XPM, img);
 	if (!(data->wall.image))
 		closing_game(data);
-	data->floor = put_xpm_to_win(data->mlx, FLOOR_XPM, img);
+	data->floor = put_xpm_to_img(data->mlx, FLOOR_XPM, img);
 	if (!(data->floor.image))
 		closing_game(data);
 	set_up_game(data);
@@ -262,14 +280,23 @@ void	init_img(t_data *data, t_img *img)
 void	open_window(t_data *data, t_img *img, char *map)
 {
 	data->matrix.map = read_map(map, &data->matrix);
+	if (!data->matrix.map)
+		closing_game(data);
+	if (data->matrix.vtl == 0 || data->matrix.htl == 0)
+	{
+		ft_printf("Map is empty or invalid\n");
+		closing_game(data);
+	}
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, XPM_HEIGHT * (data->matrix.htl),
 			XPM_WIDTH * (data->matrix.vtl), "Empty window");
-	// data->start_x = 200;
-	// data->start_y = 200;
-	// draw_player(data);
+	data->start_x = 200;
+	data->start_y = 200;
 	init_img(data, img);
-	mlx_key_hook(data->win, get_key, data);
+	draw_player(data);
+	mlx_hook(data->win, 2, 1L << 0, key_press, data);
+	mlx_hook(data->win, 3, 1L << 1, key_release, data);
+	mlx_loop_hook(data->mlx, update_player, data);
 	mlx_hook(data->win, 17, 0, closing_game, data);
 	mlx_loop(data->mlx);
 }
