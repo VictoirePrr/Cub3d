@@ -72,8 +72,7 @@ int	parse_file_secure(char *filename, t_game *game)
 			return (error_return_line("Parsing error", line, fd));
 		else if (result == 2)
 		{
-			free(line);
-			if (parse_map_from_fd(fd, game) != 0)
+			if (parse_map_from_fd(fd, game, line) != 0)
 			{
 				close(fd);
 				return (1);

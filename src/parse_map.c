@@ -1,5 +1,27 @@
 #include "pars.h"
 
+static void	print_map_debug(t_game *game)
+{
+	int i, j;
+	
+	ft_printf("\n  PARSED MAP (size: %dx%d):\n", game->map->width, game->map->height);
+	ft_printf("\n");
+	
+	for (i = 0; i < game->map->height; i++)
+	{
+		for (j = 0; j < game->map->width; j++)
+		{
+			char c = game->map->grid[i][j];
+			if (c == ' ')
+				ft_printf("·");
+			else
+				ft_printf("%c", c);
+		}
+		ft_printf("\n");
+	}
+	ft_printf("\n");
+}
+
 void	fill_grid_line(char *dest, char *src, int width)
 {
 	int	i;
@@ -67,15 +89,17 @@ int	find_player(t_game *game)
 	return (0);
 }
 
-int	parse_map_from_fd(int fd, t_game *game)
+int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 {
 	char		*line;
 	t_map_line	*map_lines;
 	t_map_line	*current;
 	t_map_line	*new_line;
 
-	map_lines = NULL;
-	line = get_next_line(fd);
+	map_lines = create_map_line(old_line);
+	if (!map_lines)
+		return (error_return("Memory allocation failed"));
+	line = get_next_line(fd); //bug no read de la first line
 	while (line != NULL)
 	{
 		if (!empty_line(line))
@@ -124,6 +148,7 @@ int	finalize_map_parsing(t_game *game, t_map_line *map_lines)
 		free_map_lines(map_lines);
 		return (1);
 	}
+	print_map_debug(game);
 	if (find_player(game) != 0 || validate_borders(game) != 0)
 	{
 		free_map_lines(map_lines);
