@@ -6,7 +6,7 @@ int	print_error(char *str)
 	return (1);
 }
 
-int	exit_error_cleanup(t_game *game, char *str, int fd)
+int	exit_error_cleanup(t_game *game, char *str, int fd) //useless
 {
 	print_error(str);
 	if (fd > 0)
@@ -15,7 +15,7 @@ int	exit_error_cleanup(t_game *game, char *str, int fd)
 	return (1);
 }
 
-int	exit_error(t_game *game, char *str)
+int	exit_error(t_game *game, char *str) //useless
 {
 	return (exit_error_cleanup(game, str, -1));
 }

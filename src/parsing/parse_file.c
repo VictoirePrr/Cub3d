@@ -40,7 +40,7 @@ int	process_line(char *line, t_game *game, int *map_start, int *config_count)
 		else
 			return (error_return("Invalid line format"));
 	}
-	else
+	else //useless
 	{
 		if (map_line(line))
 			return (0);

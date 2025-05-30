@@ -18,10 +18,10 @@
 # define WIN_TITLE "Cub3D"
 
 # define ESC 65307
-# define UP 65362
+# define UP 65362 // BIF BOF
 # define RIGHT 65363
 # define LEFT 65361
-# define DOWN 65364
+# define DOWN 65364 // bif bof
 
 # define W 119
 # define A 97
@@ -55,4 +55,7 @@ int					handle_close(t_cub3d *cub3d);
 // ============== event.c ==============
 int					handle_keypress(int keycode, t_cub3d *cub3d);
 
+// ============== render.c ==============
+void				render_frame(t_cub3d *cub3d);
+void				put_pixel(t_cub3d *cub3d, int x, int y, int color);
 #endif

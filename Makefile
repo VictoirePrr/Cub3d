@@ -9,6 +9,7 @@ SRC := $(addprefix $(SRC_DIR), \
 	main.c \
 	mlx_init.c \
 	event.c \
+	render.c \
 	)
 
 PARSING_SRC := $(addprefix $(PARSING_DIR), \

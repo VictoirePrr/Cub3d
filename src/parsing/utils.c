@@ -38,7 +38,7 @@ t_map_line	*create_map_line(char *line)
 	t_map_line	*new_line;
 	char		*trimmed;
 
-	trimmed = ft_strtrim(line, " \n\t");
+	trimmed = ft_strtrim(line, "\n");
 	if (!trimmed)
 		return (NULL);
 	new_line = malloc(sizeof(t_map_line));
@@ -55,7 +55,7 @@ t_map_line	*create_map_line(char *line)
 int	validate_char(char c)
 {
 	return (c == '0' || c == '1' || c == ' ' || c == 'N' || c == 'S' || c == 'E'
-		|| c == 'W');
+		|| c == 'W' || c == '\t');
 }
 
 int	check_position(t_game *game, int i, int j)

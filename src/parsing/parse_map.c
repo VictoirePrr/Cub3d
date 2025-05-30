@@ -95,7 +95,7 @@ int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 	t_map_line	*current;
 	t_map_line	*new_line;
 
-	map_lines = create_map_line(old_line);
+	map_lines = create_map_line(old_line); // Create the first line from the old_line sinon on la miss
 	free(old_line);
 	if (!map_lines)
 		return (error_return("Memory allocation failed"));
@@ -133,11 +133,6 @@ int	finalize_map_parsing(t_game *game, t_map_line *map_lines)
 	// 	return (error_return("Empty map"));
 	game->map->height = count_map_lines(map_lines);
 	game->map->width = get_max_width(map_lines);
-	if (game->map->height < 3 || game->map->width < 3)
-	{
-		free_map_lines(map_lines);
-		return (error_return("Map too small"));
-	}
 	if (allocate_grid(game) != 0)
 	{
 		free_map_lines(map_lines);
