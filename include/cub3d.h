@@ -17,12 +17,14 @@
 # define WIN_HEIGHT 768
 # define WIN_TITLE "Cub3D"
 
+# define MOVE_SPEED 0.5
+# define ROTATE_SPEED 0.5
 # define ESC 65307
 # define UP 65362 // BIF BOF
 # define RIGHT 65363
 # define LEFT 65361
 # define DOWN 65364 // bif bof
-
+# define PI 3.14159265358979323846
 # define W 119
 # define A 97
 # define S 115
@@ -38,6 +40,20 @@ typedef struct s_mlx
 	int				line_length;
 	int				endian;
 }					t_mlx;
+
+typedef struct s_data
+{
+	double			pos_x;
+	double			pos_y;
+	double			angle;
+	double			dir_x;
+	double			dir_y;
+	double			plane_x;
+	double			plane_y;
+	int				start_x;
+	int				start_y;
+	char			orientation;
+}					t_data;
 
 typedef struct s_cub3d
 {
@@ -58,4 +74,5 @@ int					handle_keypress(int keycode, t_cub3d *cub3d);
 // ============== render.c ==============
 void				render_frame(t_cub3d *cub3d);
 void				put_pixel(t_cub3d *cub3d, int x, int y, int color);
+
 #endif
