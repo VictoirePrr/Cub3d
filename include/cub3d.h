@@ -52,4 +52,7 @@ int					create_image(t_cub3d *cub3d);
 void				cleanup_mlx(t_cub3d *cub3d);
 int					handle_close(t_cub3d *cub3d);
 
+// ============== event.c ==============
+int					handle_keypress(int keycode, t_cub3d *cub3d);
+
 #endif

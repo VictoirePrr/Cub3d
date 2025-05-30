@@ -5,7 +5,7 @@ int	init_mlx(t_cub3d *cub3d)
 	cub3d->mlx = malloc(sizeof(t_mlx));
 	if (!cub3d->mlx)
 		return (1);
-	cub3d->mlx->mlx_ptr = mlx_init();
+	cub3d->mlx->mlx_ptr = NULL;//mlx_init();
 	if (!cub3d->mlx->mlx_ptr)
 	{
 		free(cub3d->mlx);

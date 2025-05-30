@@ -61,6 +61,7 @@ int	main(int argc, char **argv)
 	if (init_cub3d(&cub3d, argv[1]) != 0)
 		return (1);
 	//render_frame(&cub3d);
+	mlx_key_hook(cub3d.mlx->win_ptr, handle_keypress, &cub3d);
 	mlx_hook(cub3d.mlx->win_ptr, 17, 0, handle_close, &cub3d);
 	mlx_loop(cub3d.mlx->mlx_ptr);
 	return (0);

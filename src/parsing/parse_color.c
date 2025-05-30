@@ -14,10 +14,21 @@ int	parse_rgb_tokens(char **rgb, t_colors *color)
 	char	*trimmed_b;
 
 	trimmed_r = ft_strtrim(rgb[0], " \t");
-	trimmed_g = ft_strtrim(rgb[1], " \t");
-	trimmed_b = ft_strtrim(rgb[2], " \t");
-	if (!trimmed_r || !trimmed_g || !trimmed_b)
+	if (!trimmed_r)
 		return (0);
+	trimmed_g = ft_strtrim(rgb[1], " \t");
+	if (!trimmed_g)
+	{
+		free(trimmed_r);
+		return (0);
+	}
+	trimmed_b = ft_strtrim(rgb[2], " \t");
+	if (!trimmed_b)
+	{
+		free(trimmed_r);
+		free(trimmed_g);
+		return (0);
+	}
 	color->r = ft_atoi(trimmed_r);
 	color->g = ft_atoi(trimmed_g);
 	color->b = ft_atoi(trimmed_b);
@@ -36,8 +47,8 @@ int	validate_rgb_format(char **rgb)
 
 int	parse_color_secure(char *color_str, t_colors *color, t_game *game)
 {
-	char **rgb;
-	int result;
+	char	**rgb;
+	int		result;
 
 	(void)game;
 	if (color->r != -1)

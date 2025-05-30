@@ -102,8 +102,8 @@ int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		if (!empty_line(line))
-		{
+		// if (!empty_line(line))
+		// {
 			new_line = create_map_line(line);
 			if (!new_line)
 			{
@@ -120,7 +120,7 @@ int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 					current = current->next;
 				current->next = new_line;
 			}
-		}
+	//	}
 		free(line);
 		line = get_next_line(fd);
 	}

@@ -58,7 +58,7 @@ int	validate_char(char c)
 		|| c == 'W');
 }
 
-int	 	check_position(t_game *game, int i, int j)
+int	check_position(t_game *game, int i, int j)
 {
 	if (i == 0 || i == game->map->height - 1 || j == 0 || j == game->map->width
 		- 1)
