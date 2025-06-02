@@ -14,6 +14,7 @@
 
 # define WALL_XPM "sprites/blue.xpm"
 # define FLOOR_XPM "sprites/red.xpm"
+# define PLAYER_XPM "sprites/player.xpm"
 
 # define XPM_HEIGHT 64
 # define XPM_WIDTH 64
@@ -26,11 +27,27 @@
 
 # define WALL '1'
 # define FLOOR '0'
+# define PLAYER "NSEW"
 
 # define W 119
 # define A 97
 # define S 115
 # define D 100
+
+typedef struct s_player
+{
+	float		x;
+	float		y;
+	float		dir_x;
+	float		dir_y;
+
+	int			move_forward;
+	int			move_backward;
+	int			move_left;
+	int			move_right;
+	int			rotate_left;
+	int			rotate_right;
+}				t_player;
 
 typedef struct s_keys
 {
@@ -59,12 +76,14 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
-	float			start_x;
-	float			start_y;
+	float		start_x;
+	float		start_y;
 	t_matrix	matrix;
 	t_img		floor;
 	t_img		wall;
+	t_img		img_player;
 	t_keys		keys;
+	t_player	player;
 }				t_data;
 
 #endif
