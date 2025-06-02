@@ -24,6 +24,11 @@ int	init_cub3d(t_cub3d *cub3d, char *filename)
 		cleanup_game(cub3d->game);
 		return (1);
 	}
+	if (init_camera(cub3d) != 0)
+	{
+		cleanup_game(cub3d->game);
+		return (1);
+	}
 	if (init_mlx(cub3d) != 0)
 	{
 		cleanup_game(cub3d->game);
@@ -66,3 +71,6 @@ int	main(int argc, char **argv)
 	mlx_loop(cub3d.mlx->mlx_ptr);
 	return (0);
 }
+
+
+// https://docs.google.com/document/d/1tdNYHg3Mfqf8dr8W6Ajs3seUugwtmaQizZ7BzimkXog/edit?tab=t.0

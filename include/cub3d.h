@@ -41,24 +41,21 @@ typedef struct s_mlx
 	int				endian;
 }					t_mlx;
 
-typedef struct s_data
+typedef struct s_camera
 {
 	double			pos_x;
 	double			pos_y;
-	double			angle;
 	double			dir_x;
 	double			dir_y;
 	double			plane_x;
 	double			plane_y;
-	int				start_x;
-	int				start_y;
-	char			orientation;
-}					t_data;
+}					t_camera;
 
 typedef struct s_cub3d
 {
 	struct s_game	*game;
 	t_mlx			*mlx;
+	struct s_camera	*camera;
 }					t_cub3d;
 
 // ============== mlx_init.c ==============
@@ -74,5 +71,12 @@ int					handle_keypress(int keycode, t_cub3d *cub3d);
 // ============== render.c ==============
 void				render_frame(t_cub3d *cub3d);
 void				put_pixel(t_cub3d *cub3d, int x, int y, int color);
+
+//============== camera_init.c ==============
+int					init_camera(t_cub3d *cub3d);
+void				set_direction_from_orientation(t_camera *camera,
+						char orientation);
+void				update_camera_plane(t_camera *camera);
+void				cleanup_camera(t_cub3d *cub3d);
 
 #endif

@@ -10,6 +10,7 @@ SRC := $(addprefix $(SRC_DIR), \
 	mlx_init.c \
 	event.c \
 	render.c \
+	camera_init.c \
 	)
 
 PARSING_SRC := $(addprefix $(PARSING_DIR), \

@@ -47,7 +47,6 @@ typedef struct s_map_line
 	struct s_map_line	*next;
 }						t_map_line;
 
-
 // ============== ERROR.C ==============
 int						print_error(char *str);
 int						exit_error_cleanup(t_game *game, char *str, int fd);
@@ -76,16 +75,15 @@ int						validate_config_secure(t_game *game);
 int						parse_file_secure(char *filename, t_game *game);
 
 // ============== PARSE_MAP.C ==============
-int						parse_map_from_fd(int fd, t_game *game,char *old_line);
+int						parse_map_from_fd(int fd, t_game *game, char *old_line);
 int						finalize_map_parsing(t_game *game,
 							t_map_line *map_lines);
 
 // ============== TOOLS.C ==============
 int						map_line(char *line);
 int						is_player_char(char c);
-int 					is_wall_or_space(char c);
+int						is_wall_or_space(char c);
 int						validate_borders(t_game *game);
-
 
 // ============== UTILS.C ==============
 int						get_max_width(t_map_line *head);
