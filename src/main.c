@@ -1,4 +1,5 @@
 #include "pars.h"
+#include "cub3d.h"
 
 void	print_game_info(t_game *game)
 {

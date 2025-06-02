@@ -3,14 +3,20 @@ CC := gcc
 CCFLAGS := -Wextra -Wall -Werror -g3
 SRC_DIR := src/
 PARSING_DIR := src/parsing/
+CAMERA_DIR := src/cam/
 INCLUDES:= include/
+
 
 SRC := $(addprefix $(SRC_DIR), \
 	main.c \
 	mlx_init.c \
+	)
+
+CAMERA_SRC := $(addprefix $(CAMERA_DIR), \
+	camera_init.c \
 	event.c \
 	render.c \
-	camera_init.c \
+	cam_mouv.c \
 	)
 
 PARSING_SRC := $(addprefix $(PARSING_DIR), \
@@ -27,10 +33,10 @@ PARSING_SRC := $(addprefix $(PARSING_DIR), \
 	utils.c \
 	)
 
-ALL_SRC := $(SRC) $(PARSING_SRC)
+ALL_SRC := $(SRC) $(PARSING_SRC) $(CAMERA_SRC)
 
 OBJ_DIR := .obj/
-OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o) $(PARSING_SRC:$(PARSING_DIR)%.c=$(OBJ_DIR)parsing/%.o)
+OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o) $(PARSING_SRC:$(PARSING_DIR)%.c=$(OBJ_DIR)parsing/%.o) $(CAMERA_SRC:$(CAMERA_DIR)%.c=$(OBJ_DIR)cam/%.o)
 
 MLX_DIR := mlx/
 MLX := $(MLX_DIR)libmlx_Linux.a
@@ -70,6 +76,11 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 $(OBJ_DIR)parsing/%.o: $(PARSING_DIR)%.c
 	@mkdir -p $(OBJ_DIR)parsing
+	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
+	$(CC) $(CCFLAGS) $(HEADERS) -c $< -o $@
+
+$(OBJ_DIR)cam/%.o: $(CAMERA_DIR)%.c
+	@mkdir -p $(OBJ_DIR)cam
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
 	$(CC) $(CCFLAGS) $(HEADERS) -c $< -o $@
 
