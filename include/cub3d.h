@@ -4,9 +4,10 @@
 
 # include "libft.h"
 # include "mlx.h"
-// # include <X11/X.h>
-// # include <X11/keysym.h>
+# include <X11/X.h>      // COMMENTER SUR MAC
+# include <X11/keysym.h> // COMMENTER SUR MAC
 # include <fcntl.h>
+# include <math.h>
 # include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -15,6 +16,9 @@
 # define WALL_XPM "sprites/blue.xpm"
 # define FLOOR_XPM "sprites/red.xpm"
 # define PLAYER_XPM "sprites/player.xpm"
+
+# define MOVE_SPEED 0.1
+# define ROTATE_SPEED 0.05
 
 # define XPM_HEIGHT 64
 # define XPM_WIDTH 64
@@ -85,5 +89,34 @@ typedef struct s_data
 	t_keys		keys;
 	t_player	player;
 }				t_data;
+
+// utils
+void			free_all(char **matrix);
+char			*dup_temp(const char *s1);
+void			put_img_to_window(t_data *data, t_img img, int vtl, int htl);
+int				closing_game(t_data *data);
+int				key_press(int key, void *param);
+int				key_release(int key, void *param);
+
+// player_moves
+void			move_forward(t_data *data);
+void			move_backward(t_data *data);
+void			move_left(t_data *data);
+void			move_right(t_data *data);
+void			rotate_left(t_data *data);
+void			rotate_right(t_data *data);
+
+// temp_pars
+char			**fill_the_matrix(const char *file, t_matrix *matrix);
+char			**read_map(const char *file, t_matrix *matrix);
+t_img			put_xpm_to_img(void *xvar, char *xpm, t_img *img);
+void			init_img(t_data *data, t_img *img);
+void			set_up_game(t_data *data);
+void			render_img(t_data *data, int vtl, int htl);
+
+// handle_player
+int				update_player_pos(t_data *data);
+void			set_dir(char *c, t_data *data);
+void			draw_player(t_data *data);
 
 #endif

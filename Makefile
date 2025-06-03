@@ -1,19 +1,22 @@
 NAME    =  cub3d
 
-CC := gcc
-CCFLAGS := -Wextra -Wall -Werror -g3 -arch arm64
+CC := cc
+CCFLAGS := -Wextra -Wall -Werror
+# -arch arm64 --> POUR MAC
 SRC_DIR := src/
 INCLUDES:= include/
-SRC := $(addprefix $(SRC_DIR), main.c)
+SRC := $(addprefix $(SRC_DIR), main.c utils.c player_moves.c temp_pars.c handle_player.c)
 
 OBJ_DIR := .obj/
 OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 MLX_DIR := mlx/
-# MLX := $(MLX_DIR)libmlx_Linux.a
-MLX := $(MLX_DIR)libmlx_Darwin.a
-# MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
-MLX_FLAG := -Lmlx -lmlx -L/usr/X11/lib -I/usr/X11/include -lX11 -lXext -lm
+MLX := $(MLX_DIR)libmlx_Linux.a
+# COMMENTER SUR MAC
+# MLX := $(MLX_DIR)libmlx_Darwin.a --> POUR MAC
+MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
+# COMMENTER SUR MAC
+# MLX_FLAG := -Lmlx -lmlx -L/usr/X11/lib -I/usr/X11/include -lX11 -lXext -lm --> POUR MAC
 
 LIBFT_DIR := libft/
 LIBFT := $(LIBFT_DIR)libft.a 
