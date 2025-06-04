@@ -3,9 +3,8 @@
 
 # include "libft.h"
 # include "mlx.h"
-# include "pars.h"
-# include <X11/X.h>
-# include <X11/keysym.h>
+# include "pars.h"       // COMMENTER SUR MAC
+# include <X11/keysym.h> // COMMENTER SUR MAC
 # include <fcntl.h>
 # include <math.h>
 # include <stdint.h>
@@ -17,18 +16,32 @@
 // Déclarer les structures avant de les utiliser
 struct s_game;
 
+# define WALL_XPM "sprites/blue.xpm"
+# define FLOOR_XPM "sprites/red.xpm"
+# define PLAYER_XPM "sprites/player.xpm"
+
+# define XPM_HEIGHT 64
+# define XPM_WIDTH 64
+
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
 # define WIN_TITLE "Cub3D"
 
 # define MOVE_SPEED 10
 # define ROTATE_SPEED 0.5
+
 # define ESC 65307
 # define UP 65362 // BIF BOF
 # define RIGHT 65363
 # define LEFT 65361
 # define DOWN 65364 // bif bof
+
 # define PI 3.14159265358979323846
+
+# define WALL '1'
+# define FLOOR '0'
+# define PLAYER "NSEW"
+
 # define W 119
 # define A 97
 # define S 115
@@ -53,13 +66,19 @@ typedef struct s_camera
 	double			dir_y;
 	double			plane_x;
 	double			plane_y;
+	int				move_forward;
+	int				move_backward;
+	int				move_left;
+	int				move_right;
+	int				rotate_left;
+	int				rotate_right;
 }					t_camera;
 
 typedef struct s_cub3d
 {
 	struct s_game	*game;
 	t_mlx			*mlx;
-	t_camera		*camera;  // Pas besoin de struct ici car c'est défini au-dessus
+	t_camera *camera; // Pas besoin de struct ici car c'est défini au-dessus
 }					t_cub3d;
 
 // ============== mlx_init.c ==============
@@ -72,6 +91,9 @@ int					handle_close(t_cub3d *cub3d);
 // ============== event.c ==============
 int					handle_keypress(int keycode, t_cub3d *cub3d);
 void				handle_camera_movement(int keycode, t_cub3d *cub3d);
+int					key_release(int key, void *param);
+int					key_press(int key, void *param);
+int					update_player_pos(t_cub3d *cub3d);
 
 // ============== render.c ==============
 void				render_frame(t_cub3d *cub3d);

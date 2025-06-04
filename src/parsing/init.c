@@ -7,8 +7,9 @@ int	init_substructures(t_game *game)
 	game->roof = ft_calloc(1, sizeof(t_colors));
 	game->map = ft_calloc(1, sizeof(t_map));
 	game->player = ft_calloc(1, sizeof(t_player));
+	game->mini_map = ft_calloc(1, sizeof(t_mini_map));
 	if (!game->textures || !game->floor || !game->roof
-		|| !game->map || !game->player)
+		|| !game->map || !game->player || !game->mini_map)
 		return (0);
 	return (1);
 }

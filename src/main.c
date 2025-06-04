@@ -1,5 +1,5 @@
-#include "pars.h"
 #include "cub3d.h"
+#include "pars.h"
 
 void	print_game_info(t_game *game)
 {
@@ -15,6 +15,7 @@ void	print_game_info(t_game *game)
 	ft_printf("Player position: X:%d Y:%d\n", game->player->x, game->player->y);
 	ft_printf("Player orientation: %c\n", game->player->orientation);
 }
+
 int	init_cub3d(t_cub3d *cub3d, char *filename)
 {
 	cub3d->game = init_game();
@@ -67,11 +68,13 @@ int	main(int argc, char **argv)
 	if (init_cub3d(&cub3d, argv[1]) != 0)
 		return (1);
 	render_frame(&cub3d);
-	mlx_key_hook(cub3d.mlx->win_ptr, handle_keypress, &cub3d);
+	//change images for pixels
+	mlx_hook(cub3d.mlx->win_ptr, 2, 1L << 0, key_press, &cub3d);
+	mlx_hook(cub3d.mlx->win_ptr, 3, 1L << 1, key_release, &cub3d);
+	mlx_loop_hook(cub3d.mlx->win_ptr, update_player_pos, &cub3d);
 	mlx_hook(cub3d.mlx->win_ptr, 17, 0, handle_close, &cub3d);
 	mlx_loop(cub3d.mlx->mlx_ptr);
 	return (0);
 }
-
 
 // https://docs.google.com/document/d/1tdNYHg3Mfqf8dr8W6Ajs3seUugwtmaQizZ7BzimkXog/edit?tab=t.0

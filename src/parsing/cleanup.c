@@ -58,6 +58,7 @@ void	cleanup_game(t_game *game)
 		free(game->floor);
 	if (game->roof)
 		free(game->roof);
+	//add cleanup minimap;
 	cleanup_map(game->map);
 	if (game->player)
 		free(game->player);

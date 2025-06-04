@@ -10,6 +10,14 @@ typedef struct s_map
 	int					height;
 }						t_map;
 
+typedef struct s_img
+{
+	void				*image;
+	int					width;
+	int					height;
+
+}						t_img;
+
 typedef struct s_textures
 {
 	char				*north;
@@ -32,6 +40,13 @@ typedef struct s_player
 	char				orientation;
 }						t_player;
 
+typedef struct s_mini_map
+{
+	t_img				floor;
+	t_img				wall;
+	t_img				img_player;
+}						t_mini_map;
+
 typedef struct s_game
 {
 	t_textures			*textures;
@@ -39,6 +54,7 @@ typedef struct s_game
 	t_colors			*roof;
 	t_map				*map;
 	t_player			*player;
+	t_mini_map			*mini_map;
 }						t_game;
 
 typedef struct s_map_line
