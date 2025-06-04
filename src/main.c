@@ -14,12 +14,12 @@ void	open_window(t_data *data, t_img *img, char *map)
 	data->win = mlx_new_window(data->mlx, XPM_HEIGHT * (data->matrix.htl),
 			XPM_WIDTH * (data->matrix.vtl), "Minimap");
 	init_img(data, img);
-	draw_player(data);
-	// init data keys before release or press....
-	data->keys.up = 0;
-	data->keys.down = 0;
-	data->keys.left = 0;
-	data->keys.right = 0;
+	data->player.move_forward = 0;
+	data->player.move_backward = 0;
+	data->player.move_left = 0;
+	data->player.move_right = 0;
+	data->player.rotate_left = 0;
+	data->player.rotate_right = 0;
 	mlx_hook(data->win, 2, 1L << 0, key_press, data);
 	mlx_hook(data->win, 3, 1L << 1, key_release, data);
 	mlx_loop_hook(data->mlx, update_player_pos, data);

@@ -115,11 +115,28 @@ void	set_up_game(t_data *data)
 
 void	render_img(t_data *data, int vtl, int htl)
 {
+	int	tile_size;
+	int	player_size;
+	int	draw_x;
+	int	draw_y;
+
 	if (data->matrix.map[vtl][htl] == FLOOR)
 		put_img_to_window(data, data->floor, vtl, htl);
-	else if (data->matrix.map[vtl][htl] == WALL)
+	if (data->matrix.map[vtl][htl] == WALL)
 		put_img_to_window(data, data->wall, vtl, htl);
-	else if (ft_strchr(PLAYER, data->matrix.map[vtl][htl]))
+	if (ft_strchr(PLAYER, data->matrix.map[vtl][htl]))
+	{
+		// First update player position and direction
+		data->player.x = htl;
+		data->player.y = vtl;
+		set_dir(ft_strchr(PLAYER, data->matrix.map[vtl][htl]), data);
+		// Then draw floor and player at the correct position
 		put_img_to_window(data, data->floor, vtl, htl);
+		tile_size = 64;
+		player_size = 16; // Match the actual player image size
+		draw_x = htl * tile_size + (tile_size - player_size) / 2;
+		draw_y = vtl * tile_size + (tile_size - player_size) / 2;
+		mlx_put_image_to_window(data->mlx, data->win, data->img_player.image,
+			draw_x, draw_y);
+	}
 }
-

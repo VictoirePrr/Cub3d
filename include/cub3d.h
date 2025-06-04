@@ -17,8 +17,8 @@
 # define FLOOR_XPM "sprites/red.xpm"
 # define PLAYER_XPM "sprites/player.xpm"
 
-# define MOVE_SPEED 0.1
-# define ROTATE_SPEED 0.05
+# define MOVE_SPEED 0.1f
+# define ROTATE_SPEED 0.1f
 
 # define XPM_HEIGHT 64
 # define XPM_WIDTH 64

@@ -5,8 +5,8 @@ void	move_forward(t_data *data)
 	float	new_x;
 	float	new_y;
 
-	new_x = data->player.x + data->player.dir_x * 1;
-	new_y = data->player.y + data->player.dir_y * 1;
+	new_x = data->player.x + data->player.dir_x * MOVE_SPEED;
+	new_y = data->player.y + data->player.dir_y * MOVE_SPEED;
 	if (data->matrix.map[(int)new_y][(int)new_x] != '1')
 	{
 		data->player.x = new_x;
@@ -19,8 +19,8 @@ void	move_backward(t_data *data)
 	float	new_x;
 	float	new_y;
 
-	new_x = data->player.x - data->player.dir_x * 1;
-	new_y = data->player.y - data->player.dir_y * 1;
+	new_x = data->player.x - data->player.dir_x * MOVE_SPEED;
+	new_y = data->player.y - data->player.dir_y * MOVE_SPEED;
 	if (data->matrix.map[(int)new_y][(int)new_x] != '1')
 	{
 		data->player.x = new_x;
