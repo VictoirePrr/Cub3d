@@ -13,15 +13,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-// ============== FORWARD DECLARATIONS ==============
-// Déclarer les structures avant de les utiliser
+
 struct s_game;
 
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 768
 # define WIN_TITLE "Cub3D"
 
-# define MOVE_SPEED 10
+# define MOVE_SPEED 0.5
 # define ROTATE_SPEED 0.5
 # define ESC 65307
 # define UP 65362 // BIF BOF
@@ -59,7 +58,7 @@ typedef struct s_cub3d
 {
 	struct s_game	*game;
 	t_mlx			*mlx;
-	t_camera		*camera;  // Pas besoin de struct ici car c'est défini au-dessus
+	t_camera		*camera;
 }					t_cub3d;
 
 // ============== mlx_init.c ==============
