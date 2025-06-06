@@ -9,11 +9,13 @@ typedef struct s_ray
 	int			map_y;
 	double delta_dist_x; // Distance  intersections X
 	double delta_dist_y; // Distance  intersections Y
+	int hit;             // check wall
 	double side_dist_x;  // Distance jusqu'à prochaine intersection X
 	double side_dist_y;  // Distance jusqu'à prochaine intersection Y
 	int step_x;          // Direction du pas (-1 ou 1)
 	int			step_y;
-	int hit; // check wall
+	int side; // Côté touché (0=NS, 1=EW)
+
 }				t_ray;
 
 void	put_pixel(t_cub3d *cub3d, int x, int y, int color)
@@ -68,6 +70,32 @@ void	calculate_step_and_side_dist(t_ray *ray)
 	}
 }
 
+void	calculate_step_and_side_dist(t_ray *ray)
+{
+	if (ray->ray_dir_x < 0)
+	{
+		ray->step_x = -1;
+		ray->side_dist_x = (ray->cam->pos_x - ray->map_x) * ray->delta_dist_x;
+	}
+	else
+	{
+		ray->step_x = 1;
+		ray->side_dist_x = (ray->map_x + 1.0 - ray->cam->pos_x)
+			* ray->delta_dist_x;
+	}
+	if (ray->ray_dir_y < 0)
+	{
+		ray->step_y = -1;
+		ray->side_dist_y = (ray->cam->pos_y - ray->map_y) * ray->delta_dist_y;
+	}
+	else
+	{
+		ray->step_y = 1;
+		ray->side_dist_y = (ray->map_y + 1.0 - ray->cam->pos_y)
+			* ray->delta_dist_y;
+	}
+}
+
 void	debug_init_ray(t_ray *ray, int x)
 {
 	double	camera_x;
@@ -87,6 +115,29 @@ void	debug_init_ray(t_ray *ray, int x)
 	printf("=====================================\n\n");
 }
 
+void	perform_dda(t_ray *ray, t_game *game)
+{
+	while (ray->hit == 0)
+	{
+		if (ray->side_dist_x < ray->side_dist_y)
+		{
+			ray->side_dist_x += ray->delta_dist_x;
+			ray->map_x += ray->step_x;
+			ray->side = 0;
+		}
+		else
+		{
+			ray->side_dist_y += ray->delta_dist_y;
+			ray->map_y += ray->step_y;
+			ray->side = 1;
+		}
+		if (ray->map_x < 0 || ray->map_x >= game->map->width || ray->map_y < 0
+			|| ray->map_y >= game->map->height
+			|| game->map->grid[ray->map_y][ray->map_x] == '1')
+			ray->hit = 1;
+	}
+}
+
 void	render_frame(t_cub3d *cub3d)
 {
 	t_ray	ray;
@@ -100,6 +151,8 @@ void	render_frame(t_cub3d *cub3d)
 			debug_init_ray(&ray, x);
 		x++;
 	}
+	calculate_step_and_side_dist(&ray);
+	perform_dda(&ray, cub3d->game);
 	mlx_put_image_to_window(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr,
 		cub3d->mlx->img_ptr, 0, 0);
 }
