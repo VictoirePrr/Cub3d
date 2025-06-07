@@ -16,12 +16,12 @@
 
 struct s_game;
 
-# define WIN_WIDTH 1024
-# define WIN_HEIGHT 768
+# define WIN_WIDTH 1920
+# define WIN_HEIGHT 1080
 # define WIN_TITLE "Cub3D"
 
-# define MOVE_SPEED 0.6
-# define ROTATE_SPEED 0.3
+# define MOVE_SPEED 3
+# define ROTATE_SPEED 0.03
 # define ESC 65307
 # define UP 65362 // BIF BOF
 # define RIGHT 65361

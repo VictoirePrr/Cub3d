@@ -127,7 +127,7 @@ void	calculate_line_height(t_ray *ray)
 	// Calculer hauteur de la ligne
 	ray->line_height = (int)(WIN_HEIGHT / ray->perp_wall_dist);
 	// Calculer les points de début et fin
-	ray->draw_start = -ray->line_height / 1 + WIN_HEIGHT / 1;
+	ray->draw_start = -ray->line_height / 2 + WIN_HEIGHT / 2;
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
 	ray->draw_end = ray->line_height / 2 + WIN_HEIGHT / 2;
