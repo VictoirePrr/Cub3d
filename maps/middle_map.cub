@@ -1,4 +1,4 @@
-			F    000,000,000
+			F    175,52,183
   NO ./textures/greystone.xpm
 
 			EA    ./textures/white_wall.xpm
@@ -20,7 +20,7 @@
 
 
 
-  C 		255,255,255
+  C 		50,0,0
 
 
 

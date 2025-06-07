@@ -20,12 +20,12 @@ struct s_game;
 # define WIN_HEIGHT 768
 # define WIN_TITLE "Cub3D"
 
-# define MOVE_SPEED 0.5
-# define ROTATE_SPEED 0.5
+# define MOVE_SPEED 0.6
+# define ROTATE_SPEED 0.3
 # define ESC 65307
 # define UP 65362 // BIF BOF
-# define RIGHT 65363
-# define LEFT 65361
+# define RIGHT 65361
+# define LEFT 65363
 # define DOWN 65364 // bif bof
 # define PI 3.14159265358979323846
 # define W 119

@@ -28,7 +28,7 @@ void	move_camera(t_cub3d *cub3d, double move_x, double move_y)
 		cam->pos_y = new_y;
 }
 
-void	rotate_camera(t_camera *camera, double rotation)   //MYSTIQUE MAGIE NOIR / SORCELLERIE
+void	rotate_camera(t_camera *camera, double rotation)
 {
 	double	old_dir_x;
 	double	old_plane_x;

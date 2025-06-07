@@ -44,7 +44,7 @@ void	set_direction_from_orientation(t_camera *camera, char orientation)
 
 void	update_camera_plane(t_camera *camera)
 {
-	double plane_distance = 0.66; // for FOV
+	double plane_distance = 0.60; // for FOV
 
 	camera->plane_x = camera->dir_y * plane_distance;
 	camera->plane_y = -camera->dir_x * plane_distance;
