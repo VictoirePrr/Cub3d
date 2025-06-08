@@ -61,6 +61,7 @@ int	handle_close(t_cub3d *cub3d)
 {
 	cleanup_mlx(cub3d);
 	cleanup_camera(cub3d);
+	cleanup_keys(cub3d);
 	cleanup_game(cub3d->game);
 	exit(0);
 	return (0);

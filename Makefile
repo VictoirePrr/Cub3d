@@ -1,10 +1,11 @@
 NAME    =  cub3d
-CC := gcc
-CCFLAGS := -Wextra -Wall -Werror -g3
+CC := cc
+CCFLAGS := -Wextra -Wall -Werror
 SRC_DIR := src/
 PARSING_DIR := src/parsing/
 CAMERA_DIR := src/cam/
 INCLUDES:= include/
+CPPFLAGS := -MMD -MP
 
 
 SRC := $(addprefix $(SRC_DIR), \
@@ -17,6 +18,7 @@ CAMERA_SRC := $(addprefix $(CAMERA_DIR), \
 	event.c \
 	render.c \
 	cam_mouv.c \
+	keys.c \
 	)
 
 PARSING_SRC := $(addprefix $(PARSING_DIR), \
@@ -37,6 +39,7 @@ ALL_SRC := $(SRC) $(PARSING_SRC) $(CAMERA_SRC)
 
 OBJ_DIR := .obj/
 OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o) $(PARSING_SRC:$(PARSING_DIR)%.c=$(OBJ_DIR)parsing/%.o) $(CAMERA_SRC:$(CAMERA_DIR)%.c=$(OBJ_DIR)cam/%.o)
+DEPS := $(OBJ:.o=.d)
 
 MLX_DIR := mlx/
 MLX := $(MLX_DIR)libmlx_Linux.a
@@ -72,17 +75,17 @@ all: $(NAME)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(OBJ_DIR)
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
-	$(CC) $(CCFLAGS) $(HEADERS) -c $< -o $@
+	$(CC) $(CCFLAGS) $(CPPFLAGS) $(HEADERS) -c $< -o $@
 
 $(OBJ_DIR)parsing/%.o: $(PARSING_DIR)%.c
 	@mkdir -p $(OBJ_DIR)parsing
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
-	$(CC) $(CCFLAGS) $(HEADERS) -c $< -o $@
+	$(CC) $(CCFLAGS) $(CPPFLAGS) $(HEADERS) -c $< -o $@
 
 $(OBJ_DIR)cam/%.o: $(CAMERA_DIR)%.c
 	@mkdir -p $(OBJ_DIR)cam
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
-	$(CC) $(CCFLAGS) $(HEADERS) -c $< -o $@
+	$(CC) $(CCFLAGS) $(CPPFLAGS) $(HEADERS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -95,5 +98,7 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+-include $(DEPS)
 
 .PHONY: all clean fclean re kitty

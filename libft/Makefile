@@ -6,7 +6,7 @@
 #    By: pnaessen <pnaessen@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/12 12:55:24 by vicperri          #+#    #+#              #
-#    Updated: 2025/05/29 11:55:52 by pnaessen         ###   ########lyon.fr    #
+#    Updated: 2025/06/08 11:15:22 by pnaessen         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJDIR = .obj
 OBJS = $(addprefix $(OBJDIR)/,$(SRCS:.c=.o))
 DEPS := $(OBJS:%.o=%.d)
 HEADER = libft.h
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -MMD -MP
 AR = ar -rcs

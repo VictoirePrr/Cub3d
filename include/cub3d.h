@@ -13,15 +13,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-
 struct s_game;
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
 # define WIN_TITLE "Cub3D"
 
-# define MOVE_SPEED 3
-# define ROTATE_SPEED 0.03
+# define MOVE_SPEED 0.04
+# define ROTATE_SPEED 0.02
 # define ESC 65307
 # define UP 65362 // BIF BOF
 # define RIGHT 65361
@@ -32,6 +31,17 @@ struct s_game;
 # define A 97
 # define S 115
 # define D 100
+
+typedef struct s_keys
+{
+	int				w;
+	int				a;
+	int				s;
+	int				d;
+	int				left;
+	int				right;
+	int				esc;
+}					t_keys;
 
 typedef struct s_mlx
 {
@@ -59,6 +69,7 @@ typedef struct s_cub3d
 	struct s_game	*game;
 	t_mlx			*mlx;
 	t_camera		*camera;
+	t_keys			*keys;
 }					t_cub3d;
 
 // ============== mlx_init.c ==============
@@ -69,8 +80,7 @@ void				cleanup_mlx(t_cub3d *cub3d);
 int					handle_close(t_cub3d *cub3d);
 
 // ============== event.c ==============
-int					handle_keypress(int keycode, t_cub3d *cub3d);
-void				handle_camera_movement(int keycode, t_cub3d *cub3d);
+void				print_camera_debug(t_camera *camera);
 
 // ============== render.c ==============
 void				render_frame(t_cub3d *cub3d);
@@ -84,9 +94,15 @@ void				update_camera_plane(t_camera *camera);
 void				cleanup_camera(t_cub3d *cub3d);
 
 // ============== cam_mouv.c ==============
-// Utiliser struct s_game au lieu de t_game dans les déclarations
 int					check_wall(struct s_game *game, double x, double y);
 void				move_camera(t_cub3d *cub3d, double move_x, double move_y);
 void				rotate_camera(t_camera *camera, double rotation);
+
+//============== keys.c ===================
+int					handle_keypress(int keycode, t_cub3d *cub3d);
+int					handle_keyrelease(int keycode, t_cub3d *cub3d);
+int					game_loop(t_cub3d *cub3d);
+int					init_keys(t_cub3d *cub3d);
+void				cleanup_keys(t_cub3d *cub3d);
 
 #endif
