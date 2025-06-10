@@ -18,6 +18,9 @@ int	parse_texture(char **tokens, t_game *game) //need to trim
 	{
 		if (game->textures->west)
 			return (error_return("Duplicate west texture"));
+		// char *test;
+		// test = ft_strtrim(tokens[1], " \t");
+		//game->textures->west = ft_strdup(test);
 		game->textures->west = ft_strdup(tokens[1]);
 	}
 	else if (ft_strcmp(tokens[0], "EA") == 0)
@@ -38,7 +41,7 @@ int	parse_color_config(char **tokens, t_game *game)
 	return (error_return("Unknown configuration identifier"));
 }
 
-int	parse_config_secure(char *line, t_game *game)
+int	parse_config_secure(char *line, t_game *game) //split " " pas bon si color = 50,0,  0
 {
 	char	**tokens;
 	char	*trimmed;
