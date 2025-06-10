@@ -93,13 +93,13 @@ void	perform_dda(t_cub3d *cub3d, t_ray *ray)
 
 void	calculate_wall_distance(t_cub3d *cub3d, t_ray *ray)
 {
+	(void)cub3d;
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - cub3d->camera->pos_x + (1
-					- ray->step_x) / 2) / ray->ray_dir_x;
+		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - cub3d->camera->pos_y + (1
-					- ray->step_y) / 2) / ray->ray_dir_y;
+		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 }
+
 
 int	get_wall_color(t_ray *ray)
 {

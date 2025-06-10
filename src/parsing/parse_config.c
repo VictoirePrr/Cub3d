@@ -1,6 +1,6 @@
 #include "pars.h"
 
-int	parse_texture(char **tokens, t_game *game)
+int	parse_texture(char **tokens, t_game *game) //need to trim
 {
 	if (ft_strcmp(tokens[0], "NO") == 0)
 	{
