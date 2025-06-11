@@ -49,3 +49,22 @@ int	validate_borders(t_game *game)
 	}
 	return (0);
 }
+
+char	*ft_tokndup(char const *s, int *i, int size)
+{
+	char	*dup;
+	int		j;
+
+	dup = (char *)malloc(sizeof(char) * (size + 1));
+	if (!dup)
+		return (NULL);
+	j = 0;
+	while (j < size && s[*i])
+	{
+		dup[j] = s[*i];
+		*i += 1;
+		j++;
+	}
+	dup[j] = '\0';
+	return (dup);
+}

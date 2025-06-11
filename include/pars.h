@@ -84,6 +84,7 @@ int						map_line(char *line);
 int						is_player_char(char c);
 int						is_wall_or_space(char c);
 int						validate_borders(t_game *game);
+char					*ft_tokndup(char const *s, int *i, int size);
 
 // ============== UTILS.C ==============
 int						get_max_width(t_map_line *head);
