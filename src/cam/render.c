@@ -32,41 +32,41 @@ void	init_ray(t_cub3d *cub3d, t_ray *ray, int x)
 {
 	double	camera_x;
 
-	camera_x = 2 * x / (double)WIN_WIDTH - 1;
-	ray->ray_dir_x = cub3d->camera->dir_x + cub3d->camera->plane_x * camera_x;
-	ray->ray_dir_y = cub3d->camera->dir_y + cub3d->camera->plane_y * camera_x;
+	camera_x = 2 * x / (double)WIN_WIDTH - 1; // which direction the ray will be on the screen
+	ray->ray_dir_x = cub3d->camera->dir_x + cub3d->camera->plane_x * camera_x; //the actual ray position and how many horizontal tiles it crosses
+	ray->ray_dir_y = cub3d->camera->dir_y + cub3d->camera->plane_y * camera_x; // same in the vertical 
 	ray->map_x = (int)cub3d->camera->pos_x;
 	ray->map_y = (int)cub3d->camera->pos_y;
-	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
-	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
-	ray->hit = 0;
+	ray->delta_dist_x = fabs(1 / ray->ray_dir_x); // how many steps you need to move 1 full tile, on the ray, in the X direction
+	ray->delta_dist_y = fabs(1 / ray->ray_dir_y); // same in the Y
+	ray->hit = 0; // did I hit a wall ? No.
 }
 
 void	calculate_step_and_side_dist(t_cub3d *cub3d, t_ray *ray)
-{
-	if (ray->ray_dir_x < 0)
+{ // function to give precision on WHERE exactly the ray goes on x and y absis
+	if (ray->ray_dir_x < 0) // which border am I targeting ? if negative it is left
 	{
 		ray->step_x = -1;
 		ray->side_dist_x = (cub3d->camera->pos_x - ray->map_x)
-			* ray->delta_dist_x;
+			* ray->delta_dist_x; // From where I am standing, how far am I from the left border of my tile?
 	}
 	else
 	{
 		ray->step_x = 1;
 		ray->side_dist_x = (ray->map_x + 1.0 - cub3d->camera->pos_x)
-			* ray->delta_dist_x;
+			* ray->delta_dist_x; // From where I am standing, how far am I from the right border of my tile?
 	}
-	if (ray->ray_dir_y < 0)
+	if (ray->ray_dir_y < 0) // which border am I targeting ? if negative it is on the top
 	{
 		ray->step_y = -1;
 		ray->side_dist_y = (cub3d->camera->pos_y - ray->map_y)
-			* ray->delta_dist_y;
+			* ray->delta_dist_y; // From where I am standing, how far am I from the top border of my tile?
 	}
 	else
 	{
 		ray->step_y = 1;
 		ray->side_dist_y = (ray->map_y + 1.0 - cub3d->camera->pos_y)
-			* ray->delta_dist_y;
+			* ray->delta_dist_y; // From where I am standing, how far am I from the down border of my tile?
 	}
 }
 
