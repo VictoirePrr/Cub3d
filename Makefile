@@ -1,6 +1,6 @@
 NAME    =  cub3d
 CC := cc
-CCFLAGS := -Wextra -Wall -Werror
+CCFLAGS := -Wextra -Wall -Werror  -arch arm64
 SRC_DIR := src/
 PARSING_DIR := src/parsing/
 CAMERA_DIR := src/cam/
@@ -42,8 +42,11 @@ OBJ := $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o) $(PARSING_SRC:$(PARSING_DIR)%.c=$(OBJ_
 DEPS := $(OBJ:.o=.d)
 
 MLX_DIR := mlx/
-MLX := $(MLX_DIR)libmlx_Linux.a
-MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
+# MLX := $(MLX_DIR)libmlx_Linux.a
+# MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
+MLX := $(MLX_DIR)libmlx_Darwin.a
+MLX_FLAG := -Lmlx/ -lmlx -L/opt/X11/lib -lXext -lX11 -lm
+#--> pour mac
 
 LIBFT_DIR := libft/
 LIBFT := $(LIBFT_DIR)libft.a
@@ -73,18 +76,19 @@ $(NAME): $(OBJ)
 all: $(NAME)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(dir $@)
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
 	$(CC) $(CCFLAGS) $(CPPFLAGS) $(HEADERS) -c $< -o $@
 
 $(OBJ_DIR)parsing/%.o: $(PARSING_DIR)%.c
-	@mkdir -p $(OBJ_DIR)parsing
+	@mkdir -p $(dir $@)
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
 	$(CC) $(CCFLAGS) $(CPPFLAGS) $(HEADERS) -c $< -o $@
 
 $(OBJ_DIR)cam/%.o: $(CAMERA_DIR)%.c
-	@mkdir -p $(OBJ_DIR)cam
+	@mkdir -p $(dir $@)
 	@echo "$(BLUE)...Compiling...: $< $(DEF_COLOR)"
+	$(CC) $(CCFLAGS) $(CPPFLAGS) $(HEADERS) -c $< -o $@
 	$(CC) $(CCFLAGS) $(CPPFLAGS) $(HEADERS) -c $< -o $@
 
 clean:

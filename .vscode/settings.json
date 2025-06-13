@@ -2,5 +2,25 @@
 	"files.associations": {
 		"cub3d.h": "c",
 		"libft.h": "c"
-	}
+	},
+	"workbench.colorCustomizations": {
+		"activityBar.activeBackground": "#742d55",
+		"activityBar.background": "#742d55",
+		"activityBar.foreground": "#e7e7e7",
+		"activityBar.inactiveForeground": "#e7e7e799",
+		"activityBarBadge.background": "#000000",
+		"activityBarBadge.foreground": "#e7e7e7",
+		"commandCenter.border": "#e7e7e799",
+		"sash.hoverBorder": "#742d55",
+		"statusBar.background": "#4f1f3a",
+		"statusBar.foreground": "#e7e7e7",
+		"statusBarItem.hoverBackground": "#742d55",
+		"statusBarItem.remoteBackground": "#4f1f3a",
+		"statusBarItem.remoteForeground": "#e7e7e7",
+		"titleBar.activeBackground": "#4f1f3a",
+		"titleBar.activeForeground": "#e7e7e7",
+		"titleBar.inactiveBackground": "#4f1f3a99",
+		"titleBar.inactiveForeground": "#e7e7e799"
+	},
+	"peacock.color": "#4f1f3a"
 }
