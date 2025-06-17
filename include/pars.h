@@ -12,10 +12,14 @@ typedef struct s_map
 
 typedef struct s_textures
 {
-	char				*north;
-	char				*south;
-	char				*west;
-	char				*east;
+	char				*filename;
+	void				*img_ptr;
+	int					*data;
+	int					bits_per_pixel;
+	int					line_length;
+	int					endian;
+	int					width;
+	int					height;
 }						t_textures;
 
 typedef struct s_colors
@@ -34,7 +38,10 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	t_textures			*textures;
+	t_textures			*north;
+	t_textures			*south;
+	t_textures			*west;
+	t_textures			*east;
 	t_colors			*floor;
 	t_colors			*roof;
 	t_map				*map;
@@ -56,7 +63,7 @@ int						error_return_line(char *str, char *line, int fd);
 
 // ============== CLEANUP.C ==============
 void					free_split(char **split);
-void					cleanup_textures(t_textures *textures);
+void					cleanup_textures(t_game *game);
 void					cleanup_map(t_map *map);
 void					cleanup_game(t_game *game);
 
@@ -100,5 +107,8 @@ int						allocate_grid(t_game *game);
 // ============== CHECK_MAP.C ==============
 int						empty_line(char *line);
 int						check_config(char *line);
+
+int						get_texture_color(t_textures *texture, int tex_x,
+							int tex_y);
 
 #endif

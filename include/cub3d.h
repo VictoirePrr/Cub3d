@@ -31,6 +31,8 @@ struct s_game;
 # define A 97
 # define S 115
 # define D 100
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
 
 typedef struct s_keys
 {
@@ -78,6 +80,7 @@ int					create_window(t_cub3d *cub3d);
 int					create_image(t_cub3d *cub3d);
 void				cleanup_mlx(t_cub3d *cub3d);
 int					handle_close(t_cub3d *cub3d);
+int					init_textures(t_cub3d *cub3d);
 
 // ============== event.c ==============
 void				print_camera_debug(t_camera *camera);

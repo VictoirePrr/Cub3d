@@ -40,6 +40,30 @@ int	create_image(t_cub3d *cub3d)
 	return (0);
 }
 
+int	load_textures(t_cub3d *cub3d, t_textures *texture)
+{
+	texture->img_ptr = mlx_xpm_file_to_image(cub3d->mlx->mlx_ptr,
+			texture->filename, &texture->width, &texture->height);
+	if (!texture->img_ptr)
+		return (print_error("Failed to load texture"));
+	texture->data = (int *)mlx_get_data_addr(texture->img_ptr,
+			&texture->bits_per_pixel, &texture->line_length, &texture->endian);
+	if (!texture->data)
+		return (print_error("Failed to get texture data"));
+	return (0);
+}
+
+int	init_textures(t_cub3d *cub3d)
+{
+	if (load_textures(cub3d, cub3d->game->north) != 0 || load_textures(cub3d,
+			cub3d->game->south) != 0)
+		return (1);
+	if (load_textures(cub3d, cub3d->game->east) != 0 || load_textures(cub3d,
+			cub3d->game->west) != 0)
+		return (1);
+	return (0);
+}
+
 void	cleanup_mlx(t_cub3d *cub3d)
 {
 	if (!cub3d || !cub3d->mlx)

@@ -27,46 +27,63 @@ void	put_pixel(t_cub3d *cub3d, int x, int y, int color)
 			* (cub3d->mlx->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
 }
+int	create_rgb(int r, int g, int b)
+{
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (0); // Return black if values are out of range
+	return ((r << 16) | (g << 8) | b);
+}
 
 void	init_ray(t_cub3d *cub3d, t_ray *ray, int x)
 {
 	double	camera_x;
 
-	camera_x = 2 * x / (double)WIN_WIDTH - 1; // which direction the ray will be on the screen
-	ray->ray_dir_x = cub3d->camera->dir_x + cub3d->camera->plane_x * camera_x; //the actual ray position and how many horizontal tiles it crosses
-	ray->ray_dir_y = cub3d->camera->dir_y + cub3d->camera->plane_y * camera_x; // same in the vertical 
+	camera_x = 2 * x / (double)WIN_WIDTH - 1;
+	// define which direction the ray will be on the screen depending on which column we are
+	ray->ray_dir_x = cub3d->camera->dir_x + cub3d->camera->plane_x * camera_x;
+	// the actual ray direction and how many horizontal tiles it crosses
+	ray->ray_dir_y = cub3d->camera->dir_y + cub3d->camera->plane_y * camera_x;
+	// same in the vertical
 	ray->map_x = (int)cub3d->camera->pos_x;
 	ray->map_y = (int)cub3d->camera->pos_y;
-	ray->delta_dist_x = fabs(1 / ray->ray_dir_x); // how many steps you need to move 1 full tile, on the ray, in the X direction
-	ray->delta_dist_y = fabs(1 / ray->ray_dir_y); // same in the Y
-	ray->hit = 0; // did I hit a wall ? No.
+	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+	ray->hit = 0;
+	// did I hit a wall ? No.
 }
 
 void	calculate_step_and_side_dist(t_cub3d *cub3d, t_ray *ray)
-{ // function to give precision on WHERE exactly the ray goes on x and y absis
-	if (ray->ray_dir_x < 0) // which border am I targeting ? if negative it is left
+{
+	// function to give precision on WHERE exactly the ray goes on x and y absis
+	if (ray->ray_dir_x < 0)
+	// which border am I targeting ? if negative it is left
 	{
 		ray->step_x = -1;
 		ray->side_dist_x = (cub3d->camera->pos_x - ray->map_x)
-			* ray->delta_dist_x; // From where I am standing, how far am I from the left border of my tile?
+			* ray->delta_dist_x;
+		// how far am I from the left border of my tile ?
 	}
 	else
 	{
 		ray->step_x = 1;
 		ray->side_dist_x = (ray->map_x + 1.0 - cub3d->camera->pos_x)
-			* ray->delta_dist_x; // From where I am standing, how far am I from the right border of my tile?
+			* ray->delta_dist_x;
+		// how far am I from the right border of my tile ?
 	}
-	if (ray->ray_dir_y < 0) // which border am I targeting ? if negative it is on the top
+	if (ray->ray_dir_y < 0)
+	// which border am I targeting ? if negative it is on the top
 	{
 		ray->step_y = -1;
 		ray->side_dist_y = (cub3d->camera->pos_y - ray->map_y)
-			* ray->delta_dist_y; // From where I am standing, how far am I from the top border of my tile?
+			* ray->delta_dist_y;
+		// how far am I from the top border of my tile ?
 	}
 	else
 	{
 		ray->step_y = 1;
 		ray->side_dist_y = (ray->map_y + 1.0 - cub3d->camera->pos_y)
-			* ray->delta_dist_y; // From where I am standing, how far am I from the down border of my tile?
+			* ray->delta_dist_y;
+		// how far am I from the down border of my tile ?
 	}
 }
 
@@ -100,7 +117,6 @@ void	calculate_wall_distance(t_cub3d *cub3d, t_ray *ray)
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 }
 
-
 int	get_wall_color(t_ray *ray)
 {
 	int	color;
@@ -124,13 +140,52 @@ int	get_wall_color(t_ray *ray)
 	return (color);
 }
 
+void	render_floor_and_ceiling(t_cub3d *cub3d)
+{
+	int	x;
+	int	y;
+
+	// Render ceiling
+	y = 0;
+	while (y < WIN_HEIGHT / 2)
+	{
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+			put_pixel(cub3d, x, y, create_rgb(cub3d->game->roof->r,
+					cub3d->game->roof->g, cub3d->game->roof->b));
+			x++;
+		}
+		y++;
+	}
+	// Render floor
+	y = WIN_HEIGHT / 2;
+	while (y < WIN_HEIGHT)
+	{
+		x = 0;
+		while (x < WIN_WIDTH)
+		{
+			put_pixel(cub3d, x, y, create_rgb(cub3d->game->floor->r,
+					cub3d->game->floor->g, cub3d->game->floor->b));
+			x++;
+		}
+		y++;
+	}
+}
+
 void	draw_wall_line(t_cub3d *cub3d, int x, t_ray *ray)
 {
-	int	line_height;
-	int	draw_start;
-	int	draw_end;
-	int	y;
-	int	wall_color;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	double		wall_x;
+	int			tex_x;
+	int			tex_y;
+	double		step;
+	double		tex_pos;
+	int			color;
+	t_textures	*texture;
+	int			y;
 
 	line_height = (int)(WIN_HEIGHT / ray->perp_wall_dist);
 	draw_start = -line_height / 2 + WIN_HEIGHT / 2;
@@ -139,23 +194,39 @@ void	draw_wall_line(t_cub3d *cub3d, int x, t_ray *ray)
 	draw_end = line_height / 2 + WIN_HEIGHT / 2;
 	if (draw_end >= WIN_HEIGHT)
 		draw_end = WIN_HEIGHT - 1;
-	wall_color = get_wall_color(ray);
-	y = 0;
-	while (y < draw_start)
-	{
-		put_pixel(cub3d, x, y,
-			cub3d->game->roof->r << 16 | cub3d->game->roof->g << 8 | cub3d->game->roof->b);
-		y++;
-	}
+	// Determine wall_x (position on the wall)
+	if (ray->side == 0)
+		wall_x = cub3d->camera->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
+	else
+		wall_x = cub3d->camera->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
+	wall_x -= floor(wall_x);
+	// Calculate texture X coordinate
+	tex_x = (int)(wall_x * (double)TEXTURE_WIDTH);
+	if ((ray->side == 0 && ray->ray_dir_x > 0) || (ray->side == 1
+			&& ray->ray_dir_y < 0))
+		tex_x = TEXTURE_WIDTH - tex_x - 1;
+	// Select texture based on wall direction
+	if (ray->side == 0 && ray->ray_dir_x > 0)
+		texture = cub3d->game->south; // South
+	else if (ray->side == 0 && ray->ray_dir_x < 0)
+		texture = cub3d->game->north; // North
+	else if (ray->side == 1 && ray->ray_dir_y > 0)
+		texture = cub3d->game->east; // East
+	else
+		texture = cub3d->game->west; // West
+	// Calculate step and initial texture position
+	step = 1.0 * TEXTURE_HEIGHT / line_height;
+	tex_pos = (draw_start - WIN_HEIGHT / 2 + line_height / 2) * step;
+	// Draw the wall slice
+	y = draw_start;
 	while (y <= draw_end)
 	{
-		put_pixel(cub3d, x, y, wall_color);
-		y++;
-	}
-	while (y < WIN_HEIGHT)
-	{
-		put_pixel(cub3d, x, y,
-			cub3d->game->floor->r << 16 | cub3d->game->floor->g << 8 | cub3d->game->floor->b);
+		tex_y = (int)tex_pos & (TEXTURE_HEIGHT - 1);
+		tex_pos += step;
+		// Get color from texture
+		color = get_texture_color(texture, tex_x, tex_y);
+		// Draw pixel
+		put_pixel(cub3d, x, y, color);
 		y++;
 	}
 }
@@ -171,16 +242,34 @@ void	cast_ray(t_cub3d *cub3d, int x)
 	draw_wall_line(cub3d, x, &ray);
 }
 
+int	get_texture_color(t_textures *texture, int tex_x, int tex_y)
+{
+	int	pixel_index;
+
+	// Ensure the texture coordinates are within bounds
+	if (tex_x < 0 || tex_x >= texture->width || tex_y < 0
+		|| tex_y >= texture->height)
+		return (0); // Return black if out of bounds
+	// Calculate the pixel index in the texture data array
+	pixel_index = tex_y * (texture->line_length / 4) + tex_x;
+	// Return the color at the specified pixel
+	return (texture->data[pixel_index]);
+}
+
 void	render_frame(t_cub3d *cub3d)
 {
 	int	x;
 
+	// Render floor and ceiling
+	render_floor_and_ceiling(cub3d);
+	// Render walls
 	x = 0;
 	while (x < WIN_WIDTH)
 	{
 		cast_ray(cub3d, x);
 		x++;
 	}
+	// Display the frame
 	mlx_put_image_to_window(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr,
 		cub3d->mlx->img_ptr, 0, 0);
 }

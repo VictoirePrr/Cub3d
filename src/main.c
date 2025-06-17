@@ -4,10 +4,10 @@
 void	print_game_info(t_game *game)
 {
 	ft_printf("=== PARSING SUCCESSFUL ===\n");
-	ft_printf("North texture: %s\n", game->textures->north);
-	ft_printf("South texture: %s\n", game->textures->south);
-	ft_printf("West texture: %s\n", game->textures->west);
-	ft_printf("East texture: %s\n", game->textures->east);
+	ft_printf("North texture: %s\n", game->north->filename);
+	ft_printf("South texture: %s\n", game->south->filename);
+	ft_printf("West texture: %s\n", game->west->filename);
+	ft_printf("East texture: %s\n", game->east->filename);
 	ft_printf("Floor color: R:%d G:%d B:%d\n", game->floor->r, game->floor->g,
 		game->floor->b);
 	ft_printf("Ceiling color: R:%d G:%d B:%d\n", game->roof->r, game->roof->g,
@@ -44,7 +44,8 @@ int	init_cub3d(t_cub3d *cub3d, char *filename)
 		cleanup_game(cub3d->game);
 		return (1);
 	}
-	if (create_window(cub3d) != 0 || create_image(cub3d) != 0)
+	if (create_window(cub3d) != 0 || create_image(cub3d) != 0
+		|| init_textures(cub3d) != 0)
 	{
 		cleanup_mlx(cub3d);
 		cleanup_keys(cub3d);

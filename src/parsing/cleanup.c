@@ -15,19 +15,18 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	cleanup_textures(t_textures *textures)
+void	cleanup_textures(t_game *game)
 {
-	if (!textures)
+	if (!game)
 		return ;
-	if (textures->north)
-		free(textures->north);
-	if (textures->south)
-		free(textures->south);
-	if (textures->west)
-		free(textures->west);
-	if (textures->east)
-		free(textures->east);
-	free(textures);
+	if (game->north)
+		free(game->north);
+	if (game->south)
+		free(game->south);
+	if (game->west)
+		free(game->west);
+	if (game->east)
+		free(game->east);
 }
 
 void	cleanup_map(t_map *map)
@@ -53,7 +52,7 @@ void	cleanup_game(t_game *game)
 {
 	if (!game)
 		return ;
-	cleanup_textures(game->textures);
+	cleanup_textures(game);
 	if (game->floor)
 		free(game->floor);
 	if (game->roof)
