@@ -1,6 +1,6 @@
 NAME    =  cub3d
 CC := cc
-CCFLAGS := -Wextra -Wall -Werror  -arch arm64
+CCFLAGS := -Wextra -Wall -Werror
 SRC_DIR := src/
 PARSING_DIR := src/parsing/
 CAMERA_DIR := src/cam/

@@ -3,6 +3,8 @@
 
 # include "cub3d.h"
 
+struct s_mlx;
+
 typedef struct s_map
 {
 	char				**grid;

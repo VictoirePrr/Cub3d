@@ -1,30 +1,40 @@
 #include "pars.h"
 
-int	parse_texture(char **tokens, t_game *game) //trim a revoir
+int	parse_texture(char **tokens, t_game *game)
 {
+	char	*tmp;
+
 	if (ft_strcmp(tokens[0], "NO") == 0)
 	{
 		if (game->north->filename)
 			return (error_return("Duplicate north texture"));
-		game->north->filename = ft_strdup(ft_strtrim(tokens[1], " ./"));
+		tmp = ft_strtrim(tokens[1], " ./");
+		game->north->filename = ft_strdup(tmp);
+		free(tmp);
 	}
 	else if (ft_strcmp(tokens[0], "SO") == 0)
 	{
 		if (game->south->filename)
 			return (error_return("Duplicate south texture"));
-		game->south->filename = ft_strdup(ft_strtrim(tokens[1], " ./"));
+		tmp = ft_strtrim(tokens[1], " ./");
+		game->south->filename = ft_strdup(tmp);
+		free(tmp);
 	}
 	else if (ft_strcmp(tokens[0], "WE") == 0)
 	{
 		if (game->west->filename)
 			return (error_return("Duplicate west texture"));
-		game->west->filename = ft_strdup(ft_strtrim(tokens[1], " ./"));
+		tmp = ft_strtrim(tokens[1], " ./");
+		game->west->filename = ft_strdup(tmp);
+		free(tmp);
 	}
 	else if (ft_strcmp(tokens[0], "EA") == 0)
 	{
 		if (game->east->filename)
 			return (error_return("Duplicate east texture"));
-		game->east->filename = ft_strdup(ft_strtrim(tokens[1], " ./"));
+		tmp = ft_strtrim(tokens[1], " ./");
+		game->east->filename = ft_strdup(tmp);
+		free(tmp);
 	}
 	return (0);
 }
@@ -33,7 +43,6 @@ int	parse_color_config(char **tokens, t_game *game)
 {
 	if (ft_strcmp(tokens[0], "F") == 0)
 		return (parse_color_secure(tokens[1], game->floor, game));
-	// ALMOST THERE HONEY, CORRECTION IN THIS FUNCTION
 	else if (ft_strcmp(tokens[0], "C") == 0)
 		return (parse_color_secure(tokens[1], game->roof, game));
 	return (error_return("Unknown configuration identifier"));
@@ -47,7 +56,7 @@ char	**split_tokens(char const *s)
 
 	if (*s == '\0')
 		return (NULL);
-	result = (char **)malloc(sizeof(char *) * 2 + 1);
+	result = (char **)malloc(sizeof(char *) * 3);
 	// ALWAYS A SIZE OF 3 NO MATTER WHAT,
 	// OTHERWISE YOU WOULD NOT BE IN THIS FUNCTION.
 	if (!result)
@@ -79,7 +88,6 @@ int	parse_config_secure(char *line, t_game *game)
 	if (!trimmed)
 		return (error_return("Memory allocation failed"));
 	tokens = split_tokens(trimmed);
-	// CORRECTION : CREATED A SPECIAL SPLIT TO GET PERFECT TOKENS
 	free(trimmed);
 	if (!tokens || !tokens[0] || !tokens[1])
 	{
@@ -88,7 +96,6 @@ int	parse_config_secure(char *line, t_game *game)
 	}
 	if (ft_strcmp(tokens[0], "F") == 0 || ft_strcmp(tokens[0], "C") == 0)
 		result = parse_color_config(tokens, game);
-	// CORRECTION IN THIS FUNCTION
 	else
 		result = parse_texture(tokens, game);
 	free_split(tokens);
