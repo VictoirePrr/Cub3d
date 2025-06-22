@@ -21,6 +21,7 @@ struct s_game;
 
 # define MOVE_SPEED 0.04
 # define ROTATE_SPEED 0.02
+# define ROTATE_SPEED_MOUSE 0.04
 # define ESC 65307
 # define UP 65362 // BIF BOF
 # define RIGHT 65361
@@ -72,6 +73,8 @@ typedef struct s_cub3d
 	t_mlx			*mlx;
 	t_camera		*camera;
 	t_keys			*keys;
+	int				last_mouse_x;
+
 }					t_cub3d;
 
 // ============== mlx_init.c ==============
@@ -107,5 +110,5 @@ int					handle_keyrelease(int keycode, t_cub3d *cub3d);
 int					game_loop(t_cub3d *cub3d);
 int					init_keys(t_cub3d *cub3d);
 void				cleanup_keys(t_cub3d *cub3d);
-
+int					handle_mouse(int x, int y, t_cub3d *cub3d);
 #endif

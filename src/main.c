@@ -21,6 +21,7 @@ int	init_cub3d(t_cub3d *cub3d, char *filename)
 	cub3d->game = init_game();
 	if (!cub3d->game)
 		return (1);
+	cub3d->last_mouse_x = 0;
 	if (parse_file_secure(filename, cub3d->game) != 0)
 	{
 		cleanup_game(cub3d->game);
@@ -82,6 +83,7 @@ int	main(int argc, char **argv)
 	mlx_hook(cub3d.mlx->win_ptr, 2, 1L << 0, handle_keypress, &cub3d);
 	mlx_hook(cub3d.mlx->win_ptr, 3, 1L << 1, handle_keyrelease, &cub3d);
 	mlx_hook(cub3d.mlx->win_ptr, 17, 0, handle_close, &cub3d);
+	mlx_hook(cub3d.mlx->win_ptr, 6, 1L << 6, handle_mouse, &cub3d);
 	mlx_loop_hook(cub3d.mlx->mlx_ptr, game_loop, &cub3d);
 	mlx_loop(cub3d.mlx->mlx_ptr);
 	return (0);

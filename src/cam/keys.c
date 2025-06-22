@@ -72,20 +72,37 @@ void	process_movement(t_cub3d *cub3d)
 	if (cub3d->keys->s)
 		move_camera(cub3d, -cam->dir_x * MOVE_SPEED, -cam->dir_y * MOVE_SPEED);
 	if (cub3d->keys->a)
-		move_camera(cub3d, -cam->plane_x * MOVE_SPEED, -cam->plane_y * MOVE_SPEED);
+		move_camera(cub3d, -cam->plane_x * MOVE_SPEED, -cam->plane_y
+			* MOVE_SPEED);
 	if (cub3d->keys->d)
-		move_camera(cub3d, cam->plane_x * MOVE_SPEED, cam->plane_y * MOVE_SPEED);
+		move_camera(cub3d, cam->plane_x * MOVE_SPEED, cam->plane_y
+			* MOVE_SPEED);
 	if (cub3d->keys->left)
 		rotate_camera(cam, -ROTATE_SPEED);
 	if (cub3d->keys->right)
 		rotate_camera(cam, ROTATE_SPEED);
 }
 
+int	handle_mouse(int x, int y, t_cub3d *cub3d)
+{
+	t_camera	*cam;
+
+	cam = cub3d->camera;
+	;
+	y = 0;
+	mlx_mouse_move(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr, WIN_WIDTH / 2, WIN_HEIGHT / 2);
+	if (x < cub3d->last_mouse_x)
+		rotate_camera(cam, ROTATE_SPEED_MOUSE);
+	else if (x > cub3d->last_mouse_x)
+		rotate_camera(cam, -ROTATE_SPEED_MOUSE);
+	cub3d->last_mouse_x = x;
+	return (0);
+}
+
 int	game_loop(t_cub3d *cub3d)
 {
 	if (cub3d->keys->esc)
 		handle_close(cub3d);
-	
 	process_movement(cub3d);
 	render_frame(cub3d);
 	return (0);

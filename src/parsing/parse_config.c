@@ -8,7 +8,7 @@ int	parse_texture(char **tokens, t_game *game)
 	{
 		if (game->north->filename)
 			return (error_return("Duplicate north texture"));
-		tmp = ft_strtrim(tokens[1], " ./");
+		tmp = ft_strtrim(tokens[1], " ./\t"); //leaks si NULL
 		game->north->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -16,7 +16,7 @@ int	parse_texture(char **tokens, t_game *game)
 	{
 		if (game->south->filename)
 			return (error_return("Duplicate south texture"));
-		tmp = ft_strtrim(tokens[1], " ./");
+		tmp = ft_strtrim(tokens[1], " ./\t");
 		game->south->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -24,7 +24,7 @@ int	parse_texture(char **tokens, t_game *game)
 	{
 		if (game->west->filename)
 			return (error_return("Duplicate west texture"));
-		tmp = ft_strtrim(tokens[1], " ./");
+		tmp = ft_strtrim(tokens[1], " ./\t");
 		game->west->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -32,7 +32,7 @@ int	parse_texture(char **tokens, t_game *game)
 	{
 		if (game->east->filename)
 			return (error_return("Duplicate east texture"));
-		tmp = ft_strtrim(tokens[1], " ./");
+		tmp = ft_strtrim(tokens[1], " ./\t");
 		game->east->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -57,15 +57,11 @@ char	**split_tokens(char const *s)
 	if (*s == '\0')
 		return (NULL);
 	result = (char **)malloc(sizeof(char *) * 3);
-	// ALWAYS A SIZE OF 3 NO MATTER WHAT,
-	// OTHERWISE YOU WOULD NOT BE IN THIS FUNCTION.
 	if (!result)
 		return (NULL);
 	i = 0;
 	while (s[i] && s[i] != ' ' && s[i] != '\t')
 		i++;
-	// GET THE NAME OF THE TOKEN (ALWAYS SEPARATED BY A WHITESPACE FROM THE OTHER PART,
-	// EX : F).
 	size = i;
 	i = 0;
 	result[0] = ft_tokndup(s, &i, size); // TOKEN[0] HAS NOW THE NAME SEPARATED.

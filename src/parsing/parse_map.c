@@ -2,25 +2,25 @@
 
 static void	print_map_debug(t_game *game)
 {
-	char	c;
-
-	int i, j;
-	ft_printf("\n  PARSED MAP (size: %dx%d):\n", game->map->width,
-		game->map->height);
-	ft_printf("\n");
-	for (i = 0; i < game->map->height; i++)
-	{
-		for (j = 0; j < game->map->width; j++)
-		{
-			c = game->map->grid[i][j];
-			if (c == ' ')
-				ft_printf("·");
-			else
-				ft_printf("%c", c);
-		}
-		ft_printf("\n");
-	}
-	ft_printf("\n");
+	// char	c;
+	(void)game;
+	// int i, j;
+	// ft_printf("\n  PARSED MAP (size: %dx%d):\n", game->map->width,
+	// 	game->map->height);
+	// ft_printf("\n");
+	// for (i = 0; i < game->map->height; i++)
+	// {
+	// 	for (j = 0; j < game->map->width; j++)
+	// 	{
+	// 		c = game->map->grid[i][j];
+	// 		if (c == ' ')
+	// 			ft_printf("·");
+	// 		else
+	// 			ft_printf("%c", c);
+	// 	}
+	// 	ft_printf("\n");
+	// }
+	// ft_printf("\n");
 }
 
 void	fill_grid_line(char *dest, char *src, int width)
@@ -95,7 +95,7 @@ int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 	t_map_line	*current;
 	t_map_line	*new_line;
 
-	map_lines = create_map_line(old_line); // Create the first line from the old_line sinon on la miss
+	map_lines = create_map_line(old_line);
 	free(old_line);
 	if (!map_lines)
 		return (error_return("Memory allocation failed"));

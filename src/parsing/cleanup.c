@@ -17,15 +17,6 @@ void	free_split(char **split)
 
 void	cleanup_textures(t_game *game)
 {
-	// if (game->north->img_ptr)
-	// 	mlx_destroy_image(game->cub3d->mlx->mlx_ptr, game->north->img_ptr);
-	// if (game->south->img_ptr)
-	// 	mlx_destroy_image(game->cub3d->mlx->mlx_ptr, game->south->img_ptr);
-	// if (game->west->img_ptr)
-	// 	mlx_destroy_image(game->cub3d->mlx->mlx_ptr, game->west->img_ptr);
-	// if (game->east->img_ptr)
-	// 	mlx_destroy_image(game->cub3d->mlx->mlx_ptr, game->east->img_ptr);
-	//////////////////////aie////////
 	if (game->north->filename)
 		free(game->north->filename);
 	if (game->south->filename)

@@ -8,14 +8,11 @@ int	validate_rgb_values(int r, int g, int b)
 }
 
 int	parse_rgb_tokens(char **rgb, t_colors *color)
-		// CORRECTED : ATOI ALREADY HANDLE WHITESPACES NO NEED TO TRIM <3
-		// HERE COLORS WILL BE SEPARATED BY "," BUT THEY WILL STILL HAVE WHITESPACES, ATOI WILL REMOVE THEM.
 {
 	color->r = ft_atoi(rgb[0]);
 	color->g = ft_atoi(rgb[1]);
 	color->b = ft_atoi(rgb[2]);
 	return (validate_rgb_values(color->r, color->g, color->b));
-	// SLAY
 }
 
 int	validate_rgb_format(char **rgb)
@@ -39,7 +36,7 @@ int	parse_color_secure(char *color_str, t_colors *color, t_game *game)
 		free_split(rgb);
 		return (error_return("Invalid color format"));
 	}
-	result = parse_rgb_tokens(rgb, color); // CORRECTION IS IN THIS FUNCTION !!
+	result = parse_rgb_tokens(rgb, color);
 	free_split(rgb);
 	if (!result)
 		return (error_return("Color values must be between 0 and 255"));
