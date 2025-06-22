@@ -88,5 +88,3 @@ int	main(int argc, char **argv)
 	mlx_loop(cub3d.mlx->mlx_ptr);
 	return (0);
 }
-
-// https://docs.google.com/document/d/1tdNYHg3Mfqf8dr8W6Ajs3seUugwtmaQizZ7BzimkXog/edit?tab=t.0

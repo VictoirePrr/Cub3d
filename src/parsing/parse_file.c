@@ -40,13 +40,6 @@ int	process_line(char *line, t_game *game, int *map_start, int *config_count)
 		else
 			return (error_return("Invalid line format"));
 	}
-	else //useless
-	{
-		if (map_line(line))
-			return (0);
-		else
-			return (error_return("Invalid map line"));
-	}
 }
 
 int	parse_file_secure(char *filename, t_game *game)

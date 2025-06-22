@@ -25,7 +25,6 @@ void	cleanup_textures(t_game *game)
 		free(game->west->filename);
 	if (game->east->filename)
 		free(game->east->filename);
-	///////////////aie//////
 	if (game->north)
 		free(game->north);
 	if (game->south)

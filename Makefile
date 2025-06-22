@@ -11,6 +11,7 @@ CPPFLAGS := -MMD -MP
 SRC := $(addprefix $(SRC_DIR), \
 	main.c \
 	mlx_init.c \
+	mlx_free.c \
 	)
 
 CAMERA_SRC := $(addprefix $(CAMERA_DIR), \

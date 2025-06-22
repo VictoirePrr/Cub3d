@@ -2,22 +2,21 @@
 
 int	init_camera(t_cub3d *cub3d)
 {
-	t_player *player = cub3d->game->player;
+	t_player	*player;
 
+	player = cub3d->game->player;
 	cub3d->camera = malloc(sizeof(t_camera));
 	if (!cub3d->camera)
 		return (1);
-
 	cub3d->camera->pos_x = (double)player->x + 0.5;
 	cub3d->camera->pos_y = (double)player->y + 0.5;
-
 	set_direction_from_orientation(cub3d->camera, player->orientation);
 	update_camera_plane(cub3d->camera);
 	printf("Camera initialized at (%.2f, %.2f) facing %c\n",
 		cub3d->camera->pos_x, cub3d->camera->pos_y, player->orientation);
-
 	return (0);
 }
+
 void	set_direction_from_orientation(t_camera *camera, char orientation)
 {
 	if (orientation == 'N')
@@ -44,11 +43,13 @@ void	set_direction_from_orientation(t_camera *camera, char orientation)
 
 void	update_camera_plane(t_camera *camera)
 {
-	double plane_distance = 0.60; // for FOV
+	double	plane_distance;
 
+	plane_distance = 0.60;
 	camera->plane_x = camera->dir_y * plane_distance;
 	camera->plane_y = -camera->dir_x * plane_distance;
-	printf("Camera plane set to (%.2f, %.2f)\n", camera->plane_x, camera->plane_y);
+	printf("Camera plane set to (%.2f, %.2f)\n", camera->plane_x,
+		camera->plane_y);
 }
 
 void	cleanup_camera(t_cub3d *cub3d)

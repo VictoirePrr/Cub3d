@@ -14,3 +14,19 @@ void	print_camera_debug(t_camera *camera)
 	printf("Angle: %.3f rad (%.1f°)\n", angle, angle * 180 / PI);
 	printf("===================\n");
 }
+
+int	handle_mouse(int x, int y, t_cub3d *cub3d)
+{
+	t_camera	*cam;
+
+	cam = cub3d->camera;
+	y = 0;
+	mlx_mouse_move(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr, WIN_WIDTH / 2,
+		WIN_HEIGHT / 2);
+	if (x < cub3d->last_mouse_x)
+		rotate_camera(cam, ROTATE_SPEED_MOUSE);
+	else if (x > cub3d->last_mouse_x)
+		rotate_camera(cam, -ROTATE_SPEED_MOUSE);
+	cub3d->last_mouse_x = x;
+	return (0);
+}

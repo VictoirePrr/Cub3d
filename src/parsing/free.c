@@ -17,7 +17,7 @@ void	free_map_lines(t_map_line *head)
 
 int	allocate_grid(t_game *game)
 {
-	int i;
+	int	i;
 
 	game->map->grid = malloc(sizeof(char *) * (game->map->height + 1));
 	if (!game->map->grid)

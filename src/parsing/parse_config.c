@@ -8,7 +8,7 @@ int	parse_texture(char **tokens, t_game *game)
 	{
 		if (game->north->filename)
 			return (error_return("Duplicate north texture"));
-		tmp = ft_strtrim(tokens[1], " ./\t"); //leaks si NULL
+		tmp = ft_strtrim(tokens[1], " ./\t"); // leaks si NULL
 		game->north->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -64,12 +64,9 @@ char	**split_tokens(char const *s)
 		i++;
 	size = i;
 	i = 0;
-	result[0] = ft_tokndup(s, &i, size); // TOKEN[0] HAS NOW THE NAME SEPARATED.
+	result[0] = ft_tokndup(s, &i, size);
 	size = ft_strlen(s);
 	result[1] = ft_tokndup(s, &i, size);
-	// GET ALL THE INFORMATIONS IN TOKEN[1], RAW. (EX : 156,17, 158).
-	// WHY RAW ? WHITESPACES ARE NOT A PROBLEM FOR NOW,
-	// ATOI WILL HANDLE THEM LATER.
 	result[2] = NULL;
 	return (result);
 }

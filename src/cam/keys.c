@@ -15,15 +15,6 @@ int	init_keys(t_cub3d *cub3d)
 	return (0);
 }
 
-void	cleanup_keys(t_cub3d *cub3d)
-{
-	if (cub3d && cub3d->keys)
-	{
-		free(cub3d->keys);
-		cub3d->keys = NULL;
-	}
-}
-
 int	handle_keypress(int keycode, t_cub3d *cub3d)
 {
 	if (keycode == ESC)
@@ -81,22 +72,6 @@ void	process_movement(t_cub3d *cub3d)
 		rotate_camera(cam, -ROTATE_SPEED);
 	if (cub3d->keys->right)
 		rotate_camera(cam, ROTATE_SPEED);
-}
-
-int	handle_mouse(int x, int y, t_cub3d *cub3d)
-{
-	t_camera	*cam;
-
-	cam = cub3d->camera;
-	;
-	y = 0;
-	mlx_mouse_move(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr, WIN_WIDTH / 2, WIN_HEIGHT / 2);
-	if (x < cub3d->last_mouse_x)
-		rotate_camera(cam, ROTATE_SPEED_MOUSE);
-	else if (x > cub3d->last_mouse_x)
-		rotate_camera(cam, -ROTATE_SPEED_MOUSE);
-	cub3d->last_mouse_x = x;
-	return (0);
 }
 
 int	game_loop(t_cub3d *cub3d)
