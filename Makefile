@@ -15,12 +15,15 @@ SRC := $(addprefix $(SRC_DIR), \
 	)
 
 CAMERA_SRC := $(addprefix $(CAMERA_DIR), \
-	camera_init.c \
-	event.c \
-	render.c \
-	cam_mouv.c \
-	keys.c \
-	)
+    camera_init.c \
+    event.c \
+    render.c \
+    cam_mouv.c \
+    keys.c \
+    texture_utils.c \
+	colors_utils.c \
+	calc_utils.c \
+    )
 
 PARSING_SRC := $(addprefix $(PARSING_DIR), \
 	parse_color.c \

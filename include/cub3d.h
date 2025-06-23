@@ -14,6 +14,7 @@
 # include <unistd.h>
 
 struct s_game;
+struct s_textures;
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -22,6 +23,8 @@ struct s_game;
 # define MOVE_SPEED 0.04
 # define ROTATE_SPEED 0.02
 # define ROTATE_SPEED_MOUSE 0.04
+# define STEP_SIZE 0.05
+# define MAX_STEPS 1000
 # define ESC 65307
 # define UP 65362 // BIF BOF
 # define RIGHT 65361
@@ -67,6 +70,34 @@ typedef struct s_camera
 	double			plane_y;
 }					t_camera;
 
+typedef struct s_ray
+{
+	double			ray_dir_x;
+	double			ray_dir_y;
+	int				map_x;
+	int				map_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	double			perp_wall_dist;
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+}					t_ray;
+
+typedef struct s_wall_params
+{
+	int				line_height;
+	int				draw_start;
+	int				draw_end;
+	double			wall_x;
+	int				tex_x;
+	double			step;
+	double			tex_pos;
+}					t_wall_params;
+
 typedef struct s_cub3d
 {
 	struct s_game	*game;
@@ -111,4 +142,29 @@ int					game_loop(t_cub3d *cub3d);
 int					init_keys(t_cub3d *cub3d);
 void				cleanup_keys(t_cub3d *cub3d);
 int					handle_mouse(int x, int y, t_cub3d *cub3d);
+
+// ============== texture_utils.c ==============
+void				calc_bounds(t_ray *ray, t_wall_params *p);
+t_textures			*get_texture(t_cub3d *cub3d, t_ray *ray);
+double				get_wall_x(t_cub3d *cub3d, t_ray *ray);
+int					get_tex_x(double wall_x, t_ray *ray);
+void				draw_column(t_cub3d *cub3d, int x, t_wall_params *p,
+						t_textures *texture);
+
+// ============== colors_utils.c ==============
+int					get_texture_color(t_textures *texture, int tex_x,
+						int tex_y);
+void				put_pixel(t_cub3d *cub3d, int x, int y, int color);
+int					create_rgb(int r, int g, int b);
+void				render_ceiling(t_cub3d *cub3d);
+void				render_floor(t_cub3d *cub3d);
+
+// ============== calc_utils.c ==============
+void				set_ray_side_dist(t_cub3d *cub3d, t_ray *ray, double next_x,
+						double next_y);
+void				set_ray_step(t_ray *ray, double *next_x,
+						double *next_y);
+void				init_data(t_cub3d *cub3d, t_ray *ray, int column);
+void				calculate_wall_distance(t_cub3d *cub3d, t_ray *ray);
+
 #endif

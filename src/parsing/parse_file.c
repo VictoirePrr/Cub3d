@@ -40,6 +40,7 @@ int	process_line(char *line, t_game *game, int *map_start, int *config_count)
 		else
 			return (error_return("Invalid line format"));
 	}
+	return (0);
 }
 
 int	parse_file_secure(char *filename, t_game *game)
