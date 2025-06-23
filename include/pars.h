@@ -126,6 +126,4 @@ int						empty_line(char *line);
 int						check_config(char *line);
 
 
-
-
 #endif
