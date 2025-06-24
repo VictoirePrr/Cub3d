@@ -6,7 +6,7 @@ int	get_texture_color(t_textures *texture, int tex_x, int tex_y)
 
 	if (tex_x < 0 || tex_x >= texture->width || tex_y < 0
 		|| tex_y >= texture->height)
-		return (0); 
+		return (0);
 	pixel_index = tex_y * (texture->line_length / 4) + tex_x;
 	return (texture->data[pixel_index]);
 }

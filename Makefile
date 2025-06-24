@@ -12,6 +12,7 @@ SRC := $(addprefix $(SRC_DIR), \
 	main.c \
 	mlx_init.c \
 	mlx_free.c \
+	cub3d.c \
 	)
 
 CAMERA_SRC := $(addprefix $(CAMERA_DIR), \

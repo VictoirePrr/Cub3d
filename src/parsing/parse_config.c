@@ -8,7 +8,9 @@ int	parse_texture(char **tokens, t_game *game)
 	{
 		if (game->north->filename)
 			return (error_return("Duplicate north texture"));
-		tmp = ft_strtrim(tokens[1], " ./\t"); // leaks si NULL
+		tmp = ft_strtrim(tokens[1], " ./\t");
+		if (!tmp)
+			return (error_return("Error alloc"));
 		game->north->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -17,6 +19,8 @@ int	parse_texture(char **tokens, t_game *game)
 		if (game->south->filename)
 			return (error_return("Duplicate south texture"));
 		tmp = ft_strtrim(tokens[1], " ./\t");
+		if (!tmp)
+			return (error_return("Error alloc"));
 		game->south->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -25,6 +29,8 @@ int	parse_texture(char **tokens, t_game *game)
 		if (game->west->filename)
 			return (error_return("Duplicate west texture"));
 		tmp = ft_strtrim(tokens[1], " ./\t");
+		if (!tmp)
+			return (error_return("Error alloc"));
 		game->west->filename = ft_strdup(tmp);
 		free(tmp);
 	}
@@ -33,6 +39,8 @@ int	parse_texture(char **tokens, t_game *game)
 		if (game->east->filename)
 			return (error_return("Duplicate east texture"));
 		tmp = ft_strtrim(tokens[1], " ./\t");
+		if (!tmp)
+			return (error_return("Error alloc"));
 		game->east->filename = ft_strdup(tmp);
 		free(tmp);
 	}
