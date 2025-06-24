@@ -36,8 +36,9 @@ PARSING_SRC := $(addprefix $(PARSING_DIR), \
 	cleanup.c \
 	init.c \
 	tools.c \
-	free.c\
+	free.c \
 	utils.c \
+	grid.c \
 	)
 
 ALL_SRC := $(SRC) $(PARSING_SRC) $(CAMERA_SRC)
