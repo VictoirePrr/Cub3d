@@ -4,8 +4,6 @@
 # include "libft.h"
 # include "mlx.h"
 # include "pars.h"
-// # include <X11/X.h>
-// # include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdint.h>
@@ -13,8 +11,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-struct s_game;
-struct s_textures;
+struct	s_game;
+struct	s_textures;
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
