@@ -12,6 +12,7 @@ SRC := $(addprefix $(SRC_DIR), \
 	main.c \
 	mlx_init.c \
 	mlx_free.c \
+	cub3d.c \
 	)
 
 CAMERA_SRC := $(addprefix $(CAMERA_DIR), \
@@ -35,8 +36,9 @@ PARSING_SRC := $(addprefix $(PARSING_DIR), \
 	cleanup.c \
 	init.c \
 	tools.c \
-	free.c\
+	free.c \
 	utils.c \
+	grid.c \
 	)
 
 ALL_SRC := $(SRC) $(PARSING_SRC) $(CAMERA_SRC)

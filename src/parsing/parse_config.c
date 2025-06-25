@@ -1,41 +1,31 @@
 #include "pars.h"
 
-int	parse_texture(char **tokens, t_game *game)
+int	set_texture_filename(char **filename, char *token)
 {
 	char	*tmp;
 
+	if (*filename)
+		return (error_return("Duplicate texture"));
+	tmp = ft_strtrim(token, " ./\t");
+	if (!tmp)
+		return (error_return("Error alloc"));
+	*filename = ft_strdup(tmp);
+	free(tmp);
+	if (!*filename)
+		return (error_return("Error alloc"));
+	return (0);
+}
+
+int	parse_texture(char **tokens, t_game *game)
+{
 	if (ft_strcmp(tokens[0], "NO") == 0)
-	{
-		if (game->north->filename)
-			return (error_return("Duplicate north texture"));
-		tmp = ft_strtrim(tokens[1], " ./\t"); // leaks si NULL
-		game->north->filename = ft_strdup(tmp);
-		free(tmp);
-	}
+		return (set_texture_filename(&game->north->filename, tokens[1]));
 	else if (ft_strcmp(tokens[0], "SO") == 0)
-	{
-		if (game->south->filename)
-			return (error_return("Duplicate south texture"));
-		tmp = ft_strtrim(tokens[1], " ./\t");
-		game->south->filename = ft_strdup(tmp);
-		free(tmp);
-	}
+		return (set_texture_filename(&game->south->filename, tokens[1]));
 	else if (ft_strcmp(tokens[0], "WE") == 0)
-	{
-		if (game->west->filename)
-			return (error_return("Duplicate west texture"));
-		tmp = ft_strtrim(tokens[1], " ./\t");
-		game->west->filename = ft_strdup(tmp);
-		free(tmp);
-	}
+		return (set_texture_filename(&game->west->filename, tokens[1]));
 	else if (ft_strcmp(tokens[0], "EA") == 0)
-	{
-		if (game->east->filename)
-			return (error_return("Duplicate east texture"));
-		tmp = ft_strtrim(tokens[1], " ./\t");
-		game->east->filename = ft_strdup(tmp);
-		free(tmp);
-	}
+		return (set_texture_filename(&game->east->filename, tokens[1]));
 	return (0);
 }
 
@@ -93,14 +83,4 @@ int	parse_config_secure(char *line, t_game *game)
 		result = parse_texture(tokens, game);
 	free_split(tokens);
 	return (result);
-}
-
-int	validate_config_secure(t_game *game)
-{
-	if (!game->north->filename || !game->south->filename
-		|| !game->west->filename || !game->east->filename)
-		return (error_return("Missing texture(s)"));
-	if (game->floor->r == -1 || game->roof->r == -1)
-		return (error_return("Missing color(s)"));
-	return (0);
 }

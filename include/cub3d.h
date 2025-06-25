@@ -13,8 +13,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-struct s_game;
-struct s_textures;
+struct	s_game;
+struct	s_textures;
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -108,6 +108,8 @@ typedef struct s_cub3d
 
 }					t_cub3d;
 
+void				print_game_info(t_game *game);
+
 // ============== mlx_init.c ==============
 int					init_mlx(t_cub3d *cub3d);
 int					create_window(t_cub3d *cub3d);
@@ -162,9 +164,15 @@ void				render_floor(t_cub3d *cub3d);
 // ============== calc_utils.c ==============
 void				set_ray_side_dist(t_cub3d *cub3d, t_ray *ray, double next_x,
 						double next_y);
-void				set_ray_step(t_ray *ray, double *next_x,
-						double *next_y);
+void				set_ray_step(t_ray *ray, double *next_x, double *next_y);
 void				init_data(t_cub3d *cub3d, t_ray *ray, int column);
 void				calculate_wall_distance(t_cub3d *cub3d, t_ray *ray);
+
+//=============== cub3d.c========================
+int					init_cub3d(t_cub3d *cub3d, char *filename);
+int					init_components(t_cub3d *cub3d, char *filename);
+int					init_mlx_components(t_cub3d *cub3d);
+void				cleanup_mlx_error(t_cub3d *cub3d);
+void				cleanup_error(t_cub3d *cub3d);
 
 #endif

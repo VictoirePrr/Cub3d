@@ -25,104 +25,54 @@ static void	print_map_debug(t_game *game)
 	ft_printf("\n");
 }
 
-void	fill_grid_line(char *dest, char *src, int width)
+int	add_line_to_map(t_map_line **map_lines, char *line)
 {
-	int	i;
-	int	src_len;
-
-	src_len = ft_strlen(src);
-	i = 0;
-	while (i < src_len && i < width)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	while (i < width)
-	{
-		dest[i] = ' ';
-		i++;
-	}
-	dest[width] = '\0';
-}
-
-int	convert_to_grid(t_game *game, t_map_line *head)
-{
-	int			i;
+	t_map_line	*new_line;
 	t_map_line	*current;
 
-	i = 0;
-	current = head;
-	while (current && i < game->map->height)
+	new_line = create_map_line(line);
+	if (!new_line)
+		return (1);
+	if (!*map_lines)
+		*map_lines = new_line;
+	else
 	{
-		fill_grid_line(game->map->grid[i], current->line, game->map->width);
-		current = current->next;
-		i++;
+		current = *map_lines;
+		while (current->next)
+			current = current->next;
+		current->next = new_line;
 	}
 	return (0);
 }
 
-int	find_player(t_game *game)
+int	read_and_process_lines(int fd, t_map_line **map_lines)
 {
-	int	i;
-	int	j;
-	int	player_count;
+	char	*line;
 
-	player_count = 0;
-	i = -1;
-	while (++i < game->map->height)
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
-		j = -1;
-		while (++j < game->map->width)
+		if (add_line_to_map(map_lines, line) != 0)
 		{
-			if (is_player_char(game->map->grid[i][j]))
-			{
-				game->player->x = j;
-				game->player->y = i;
-				game->player->orientation = game->map->grid[i][j];
-				player_count++;
-			}
-			else if (!validate_char(game->map->grid[i][j]))
-				return (error_return("Invalid character in map"));
+			free(line);
+			free_map_lines(*map_lines);
+			return (error_return("Memory allocation failed"));
 		}
+		free(line);
+		line = get_next_line(fd);
 	}
-	if (player_count != 1)
-		return (error_return("Map must have exactly one player"));
 	return (0);
 }
 
 int	parse_map_from_fd(int fd, t_game *game, char *old_line)
 {
-	char		*line;
 	t_map_line	*map_lines;
-	t_map_line	*current;
-	t_map_line	*new_line;
 
-	map_lines = create_map_line(old_line);
-	free(old_line);
+	map_lines = init_first_map_line(old_line);
 	if (!map_lines)
 		return (error_return("Memory allocation failed"));
-	line = get_next_line(fd);
-	while (line != NULL)
-	{
-		new_line = create_map_line(line);
-		if (!new_line)
-		{
-			free(line);
-			free_map_lines(map_lines);
-			return (error_return("Memory allocation failed"));
-		}
-		if (!map_lines)
-			map_lines = new_line;
-		else
-		{
-			current = map_lines;
-			while (current->next)
-				current = current->next;
-			current->next = new_line;
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
+	if (read_and_process_lines(fd, &map_lines) != 0)
+		return (1);
 	return (finalize_map_parsing(game, map_lines));
 }
 

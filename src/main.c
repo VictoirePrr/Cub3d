@@ -16,48 +16,6 @@ void	print_game_info(t_game *game)
 	ft_printf("Player orientation: %c\n", game->player->orientation);
 }
 
-int	init_cub3d(t_cub3d *cub3d, char *filename)
-{
-	cub3d->game = init_game();
-	if (!cub3d->game)
-		return (1);
-	cub3d->last_mouse_x = 0;
-	if (parse_file_secure(filename, cub3d->game) != 0)
-	{
-		cleanup_game(cub3d->game);
-		return (1);
-	}
-	if (init_camera(cub3d) != 0)
-	{
-		cleanup_game(cub3d->game);
-		return (1);
-	}
-	if (init_keys(cub3d) != 0)
-	{
-		cleanup_camera(cub3d);
-		cleanup_game(cub3d->game);
-		return (1);
-	}
-	if (init_mlx(cub3d) != 0)
-	{
-		cleanup_keys(cub3d);
-		cleanup_camera(cub3d);
-		cleanup_game(cub3d->game);
-		return (1);
-	}
-	if (create_window(cub3d) != 0 || create_image(cub3d) != 0
-		|| init_textures(cub3d) != 0)
-	{
-		cleanup_mlx(cub3d);
-		cleanup_keys(cub3d);
-		cleanup_camera(cub3d);
-		cleanup_game(cub3d->game);
-		return (1);
-	}
-	print_game_info(cub3d->game);
-	return (0);
-}
-
 int	validate_args(int argc)
 {
 	if (argc != 2)

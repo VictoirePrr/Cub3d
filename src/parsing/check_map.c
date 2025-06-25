@@ -31,3 +31,13 @@ int	check_config(char *line)
 	free(trimmed);
 	return (result);
 }
+
+int	validate_config_secure(t_game *game)
+{
+	if (!game->north->filename || !game->south->filename
+		|| !game->west->filename || !game->east->filename)
+		return (error_return("Missing texture(s)"));
+	if (game->floor->r == -1 || game->roof->r == -1)
+		return (error_return("Missing color(s)"));
+	return (0);
+}

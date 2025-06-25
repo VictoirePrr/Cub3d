@@ -1,13 +1,9 @@
 #ifndef PARS_H
 # define PARS_H
 
-// # include "cub3d.h" -->probleme : inclure cub3d.h alors que lui meme depend de pars.h
-
 # include "libft.h"
 # include "mlx.h"
 # include "pars.h"
-// # include <X11/X.h>
-// # include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdint.h>
@@ -15,7 +11,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-struct s_mlx;
+struct	s_mlx;
 
 typedef struct s_map
 {
@@ -35,9 +31,6 @@ typedef struct s_textures
 	int					width;
 	int					height;
 }						t_textures;
-
-typedef struct s_textures t_textures;
-
 
 typedef struct s_colors
 {
@@ -70,6 +63,10 @@ typedef struct s_map_line
 	char				*line;
 	struct s_map_line	*next;
 }						t_map_line;
+
+t_map_line				*init_first_map_line(char *old_line);
+int						find_player(t_game *game);
+int						convert_to_grid(t_game *game, t_map_line *head);
 
 // ============== ERROR.C ==============
 int						print_error(char *str);
@@ -124,6 +121,5 @@ int						allocate_grid(t_game *game);
 // ============== CHECK_MAP.C ==============
 int						empty_line(char *line);
 int						check_config(char *line);
-
 
 #endif
