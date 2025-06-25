@@ -1,7 +1,7 @@
-NO ./textures/greystone.xpm
-SO ./textures/mossy.xpm
-WE ./textures/purplestone.xpm
-EA ./textures/white_wall.xpm
+NO ./textures/fighting.xpm
+SO ./textures/queen.xpm
+WE ./textures/piero.xpm
+EA ./textures/vic.xpm
 
 F 156,17,158
 C 158,121,55
