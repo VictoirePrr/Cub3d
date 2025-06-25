@@ -4,8 +4,8 @@
 # include "libft.h"
 # include "mlx.h"
 # include "pars.h"
-// # include <X11/X.h>
-// # include <X11/keysym.h>
+# include <X11/X.h> // commenter sur mac
+# include <X11/keysym.h> // commenter sur mac
 # include <fcntl.h>
 # include <math.h>
 # include <stdint.h>
