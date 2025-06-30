@@ -109,6 +109,8 @@ typedef struct s_cub3d
 }					t_cub3d;
 
 void				print_game_info(t_game *game);
+//void	setup_ray_direction(t_cub3d *cub3d, t_ray *ray);
+void	march_ray_step_by_step(t_cub3d *cub3d, t_ray *ray);
 
 // ============== mlx_init.c ==============
 int					init_mlx(t_cub3d *cub3d);
