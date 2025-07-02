@@ -27,39 +27,37 @@ int	is_wall_at_position(t_cub3d *cub3d, int x, int y)
 		return (1);
 	if (y < 0 || y >= cub3d->game->map->height)
 		return (1);
-	
 	if (cub3d->game->map->grid[y][x] == '1')
 		return (1);
-	
 	return (0);
+}
+
+static void	perform_ray_step(t_ray *ray)
+{
+	if (ray->side_dist_x < ray->side_dist_y)
+	{
+		ray->map_x += ray->step_x;
+		ray->side_dist_x += ray->delta_dist_x;
+		ray->side = 0;
+	}
+	else
+	{
+		ray->map_y += ray->step_y;
+		ray->side_dist_y += ray->delta_dist_y;
+		ray->side = 1;
+	}
 }
 
 void	march_ray_step_by_step(t_cub3d *cub3d, t_ray *ray)
 {
-	int		wall_found;
-	int		steps_taken;
-	double	next_x_distance;
-	double	next_y_distance;
-	
+	int	wall_found;
+	int	steps_taken;
+
 	wall_found = 0;
 	steps_taken = 0;
 	while (wall_found == 0 && steps_taken < 1000)
 	{
-		next_x_distance = ray->side_dist_x;
-		next_y_distance = ray->side_dist_y;
-		
-		if (next_x_distance < next_y_distance)
-		{
-			ray->map_x += ray->step_x;
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->side = 0; 
-		}
-		else
-		{
-			ray->map_y += ray->step_y;
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->side = 1;
-		}
+		perform_ray_step(ray);
 		steps_taken++;
 		if (is_wall_at_position(cub3d, ray->map_x, ray->map_y))
 		{
@@ -68,8 +66,6 @@ void	march_ray_step_by_step(t_cub3d *cub3d, t_ray *ray)
 		}
 	}
 }
-
-
 
 void	draw_wall_line(t_cub3d *cub3d, int x, t_ray *ray)
 {
@@ -96,7 +92,7 @@ void	cast_ray(t_cub3d *cub3d, int x)
 	set_ray_step(&ray, &next_x, &next_y);
 	set_ray_side_dist(cub3d, &ray, next_x, next_y);
 	march_ray_step_by_step(cub3d, &ray);
-	//walk_until_hit_wall(cub3d, &ray);
+	// walk_until_hit_wall(cub3d, &ray);
 	calculate_wall_distance(cub3d, &ray);
 	draw_wall_line(cub3d, x, &ray);
 }

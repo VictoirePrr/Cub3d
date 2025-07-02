@@ -47,29 +47,32 @@ void	set_ray_step(t_ray *ray, double *next_x, double *next_y)
 	}
 }
 
-
 // void	setup_ray_direction(t_cub3d *cub3d, t_ray *ray)
 // {
 // 	if (ray->ray_dir_x < 0)
 // 	{
 // 		ray->step_x = -1;
-// 		ray->side_dist_x = (cub3d->camera->pos_x - (double)ray->map_x) * ray->delta_dist_x;
+// 		ray->side_dist_x = (cub3d->camera->pos_x - (double)ray->map_x)
+//	* ray->delta_dist_x;
 // 	}
 // 	else
 // 	{
 // 		ray->step_x = 1;
-// 		ray->side_dist_x = ((double)ray->map_x + 1.0 - cub3d->camera->pos_x) * ray->delta_dist_x;
+// 		ray->side_dist_x = ((double)ray->map_x + 1.0 - cub3d->camera->pos_x)
+//		* ray->delta_dist_x;
 // 	}
-	
+
 // 	if (ray->ray_dir_y < 0)
 // 	{
 // 		ray->step_y = -1;
-// 		ray->side_dist_y = (cub3d->camera->pos_y - (double)ray->map_y) * ray->delta_dist_y;
+// 		ray->side_dist_y = (cub3d->camera->pos_y - (double)ray->map_y)
+//	* ray->delta_dist_y;
 // 	}
 // 	else
 // 	{
 // 		ray->step_y = 1;
-// 		ray->side_dist_y = ((double)ray->map_y + 1.0 - cub3d->camera->pos_y) * ray->delta_dist_y;
+// 		ray->side_dist_y = ((double)ray->map_y + 1.0 - cub3d->camera->pos_y)
+//	* ray->delta_dist_y;
 // 	}
 // }
 
