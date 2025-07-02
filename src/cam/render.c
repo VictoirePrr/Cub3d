@@ -89,7 +89,8 @@ void	cast_ray(t_cub3d *cub3d, int x)
 	double	next_y;
 
 	init_data(cub3d, &ray, x);
-	set_ray_step(&ray, &next_x, &next_y);
+	setup_x_direction(&ray, &next_x);
+	setup_y_direction(&ray, &next_y);
 	set_ray_side_dist(cub3d, &ray, next_x, next_y);
 	march_ray_step_by_step(cub3d, &ray);
 	// walk_until_hit_wall(cub3d, &ray);

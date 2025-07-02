@@ -23,28 +23,32 @@ void	calculate_wall_distance(t_cub3d *cub3d, t_ray *ray)
 		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
 }
 
-void	set_ray_step(t_ray *ray, double *next_x, double *next_y)
+void    setup_x_direction(t_ray *ray, double *next_x)
 {
-	if (ray->ray_dir_x < 0)
-	{
-		ray->step_x = -1;
-		*next_x = ray->map_x;
-	}
-	else
-	{
-		ray->step_x = 1;
-		*next_x = ray->map_x + 1.0;
-	}
-	if (ray->ray_dir_y < 0)
-	{
-		ray->step_y = -1;
-		*next_y = ray->map_y;
-	}
-	else
-	{
-		ray->step_y = 1;
-		*next_y = ray->map_y + 1.0;
-	}
+    if (ray->ray_dir_x < 0)
+    {
+        ray->step_x = -1;
+        *next_x = ray->map_x;
+    }
+    else
+    {
+        ray->step_x = 1;
+        *next_x = ray->map_x + 1.0;
+    }
+}
+
+void    setup_y_direction(t_ray *ray, double *next_y)
+{
+    if (ray->ray_dir_y < 0)
+    {
+        ray->step_y = -1;
+        *next_y = ray->map_y;
+    }
+    else
+    {
+        ray->step_y = 1;
+        *next_y = ray->map_y + 1.0;
+    }
 }
 
 // void	setup_ray_direction(t_cub3d *cub3d, t_ray *ray)

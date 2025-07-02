@@ -96,6 +96,7 @@ typedef struct s_wall_params
 	int				tex_x;
 	double			step;
 	double			tex_pos;
+	double wall_distance;
 }					t_wall_params;
 
 typedef struct s_cub3d
@@ -177,4 +178,7 @@ int					init_mlx_components(t_cub3d *cub3d);
 void				cleanup_mlx_error(t_cub3d *cub3d);
 void				cleanup_error(t_cub3d *cub3d);
 
+void	setup_y_direction(t_ray *ray, double *next_y);
+void	setup_x_direction(t_ray *ray, double *next_x);
+int apply_fog(int color, double distance, double fog_start, double fog_end);
 #endif
