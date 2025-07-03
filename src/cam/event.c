@@ -43,7 +43,7 @@ void	recenter_mouse_if_needed(t_cub3d *cub3d, int x)
 
 	center_x = WIN_WIDTH / 2;
 	center_y = WIN_HEIGHT / 2;
-	threshold = (WIN_WIDTH * 3) / 8;
+	threshold = (WIN_WIDTH * 3) / 10;
 	if (should_recenter_mouse(x, threshold))
 	{
 		mlx_mouse_move(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr,
