@@ -1,25 +1,5 @@
 #include "cub3d.h"
-
-// void	walk_until_hit_wall(t_cub3d *cub3d, t_ray *ray)
-// {
-// 	while (ray->hit == 0)
-// 	{
-// 		if (ray->side_dist_x < ray->side_dist_y)
-// 		{
-// 			ray->side_dist_x += ray->delta_dist_x;
-// 			ray->map_x += ray->step_x;
-// 			ray->side = 0;
-// 		}
-// 		else
-// 		{
-// 			ray->side_dist_y += ray->delta_dist_y;
-// 			ray->map_y += ray->step_y;
-// 			ray->side = 1;
-// 		}
-// 		if (cub3d->game->map->grid[ray->map_y][ray->map_x] == '1')
-// 			ray->hit = 1;
-// 	}
-// }
+#include "sys/time.h"
 
 int	is_wall_at_position(t_cub3d *cub3d, int x, int y)
 {
@@ -98,6 +78,32 @@ void	cast_ray(t_cub3d *cub3d, int x)
 	draw_wall_line(cub3d, x, &ray);
 }
 
+// void	print_fps(void)
+// {
+// 	static struct timeval	last_time = {0, 0};
+// 	static int				frame_count = 0;
+// 	static double			fps = 0.0;
+// 	struct timeval			current_time;
+// 	double					delta_time;
+
+// 	gettimeofday(&current_time, NULL);
+// 	if (last_time.tv_sec == 0)
+// 	{
+// 		last_time = current_time;
+// 		return ;
+// 	}
+// 	frame_count++;
+// 	delta_time = (current_time.tv_sec - last_time.tv_sec)
+// 		+ (current_time.tv_usec - last_time.tv_usec) / 1000000.0;
+// 	if (frame_count >= 60 || delta_time >= 1.0)
+// 	{
+// 		fps = frame_count / delta_time;
+// 		printf("FPS: %.1f\n", fps);
+// 		frame_count = 0;
+// 		last_time = current_time;
+// 	}
+// }
+
 void	render_frame(t_cub3d *cub3d)
 {
 	int	x;
@@ -112,4 +118,5 @@ void	render_frame(t_cub3d *cub3d)
 	}
 	mlx_put_image_to_window(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr,
 		cub3d->mlx->img_ptr, 0, 0);
+	//print_fps();
 }
