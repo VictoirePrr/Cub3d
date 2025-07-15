@@ -1,5 +1,26 @@
 #include "cub3d.h"
-#include "sys/time.h"
+#include <sys/time.h>
+
+// void	walk_until_hit_wall(t_cub3d *cub3d, t_ray *ray)
+// {
+// 	while (ray->hit == 0)
+// 	{
+// 		if (ray->side_dist_x < ray->side_dist_y)
+// 		{
+// 			ray->side_dist_x += ray->delta_dist_x;
+// 			ray->map_x += ray->step_x;
+// 			ray->side = 0;
+// 		}
+// 		else
+// 		{
+// 			ray->side_dist_y += ray->delta_dist_y;
+// 			ray->map_y += ray->step_y;
+// 			ray->side = 1;
+// 		}
+// 		if (cub3d->game->map->grid[ray->map_y][ray->map_x] == '1')
+// 			ray->hit = 1;
+// 	}
+// }
 
 int	is_wall_at_position(t_cub3d *cub3d, int x, int y)
 {
@@ -12,7 +33,7 @@ int	is_wall_at_position(t_cub3d *cub3d, int x, int y)
 	return (0);
 }
 
-static void	perform_ray_step(t_ray *ray)
+void	perform_ray_step(t_ray *ray)
 {
 	if (ray->side_dist_x < ray->side_dist_y)
 	{
@@ -59,6 +80,7 @@ void	draw_wall_line(t_cub3d *cub3d, int x, t_ray *ray)
 	texture = get_texture(cub3d, ray);
 	p.step = 1.0 * TEXTURE_HEIGHT / p.line_height;
 	p.tex_pos = (p.draw_start - WIN_HEIGHT / 2 + p.line_height / 2) * p.step;
+	p.wall_distance = ray->perp_wall_dist;
 	draw_column(cub3d, x, &p, texture);
 }
 
@@ -73,36 +95,35 @@ void	cast_ray(t_cub3d *cub3d, int x)
 	setup_y_direction(&ray, &next_y);
 	set_ray_side_dist(cub3d, &ray, next_x, next_y);
 	march_ray_step_by_step(cub3d, &ray);
-	// walk_until_hit_wall(cub3d, &ray);
 	calculate_wall_distance(cub3d, &ray);
 	draw_wall_line(cub3d, x, &ray);
 }
 
-// void	print_fps(void)
-// {
-// 	static struct timeval	last_time = {0, 0};
-// 	static int				frame_count = 0;
-// 	static double			fps = 0.0;
-// 	struct timeval			current_time;
-// 	double					delta_time;
+void	print_fps(void)
+{
+	static struct timeval	last_time = {0, 0};
+	static int				frame_count = 0;
+	static double			fps = 0.0;
+	struct timeval			current_time;
+	double					delta_time;
 
-// 	gettimeofday(&current_time, NULL);
-// 	if (last_time.tv_sec == 0)
-// 	{
-// 		last_time = current_time;
-// 		return ;
-// 	}
-// 	frame_count++;
-// 	delta_time = (current_time.tv_sec - last_time.tv_sec)
-// 		+ (current_time.tv_usec - last_time.tv_usec) / 1000000.0;
-// 	if (frame_count >= 60 || delta_time >= 1.0)
-// 	{
-// 		fps = frame_count / delta_time;
-// 		printf("FPS: %.1f\n", fps);
-// 		frame_count = 0;
-// 		last_time = current_time;
-// 	}
-// }
+	gettimeofday(&current_time, NULL);
+	if (last_time.tv_sec == 0)
+	{
+		last_time = current_time;
+		return ;
+	}
+	frame_count++;
+	delta_time = (current_time.tv_sec - last_time.tv_sec)
+		+ (current_time.tv_usec - last_time.tv_usec) / 1000000.0;
+	if (frame_count >= 60 || delta_time >= 1.0)
+	{
+		fps = frame_count / delta_time;
+		printf("FPS: %.1f\n", fps);
+		frame_count = 0;
+		last_time = current_time;
+	}
+}
 
 void	render_frame(t_cub3d *cub3d)
 {
@@ -118,5 +139,5 @@ void	render_frame(t_cub3d *cub3d)
 	}
 	mlx_put_image_to_window(cub3d->mlx->mlx_ptr, cub3d->mlx->win_ptr,
 		cub3d->mlx->img_ptr, 0, 0);
-	//print_fps();
+	print_fps();
 }
