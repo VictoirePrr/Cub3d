@@ -1,30 +1,5 @@
 #include "pars.h"
 
-static void	print_map_debug(t_game *game)
-{
-	char	c;
-	int		i;
-	int		j;
-
-	(void)game;
-	ft_printf("\n  PARSED MAP (size: %dx%d):\n", game->map->width,
-		game->map->height);
-	ft_printf("\n");
-	for (i = 0; i < game->map->height; i++)
-	{
-		for (j = 0; j < game->map->width; j++)
-		{
-			c = game->map->grid[i][j];
-			if (c == ' ')
-				ft_printf("·");
-			else
-				ft_printf("%c", c);
-		}
-		ft_printf("\n");
-	}
-	ft_printf("\n");
-}
-
 int	add_line_to_map(t_map_line **map_lines, char *line)
 {
 	t_map_line	*new_line;
@@ -90,7 +65,6 @@ int	finalize_map_parsing(t_game *game, t_map_line *map_lines)
 		free_map_lines(map_lines);
 		return (1);
 	}
-	print_map_debug(game);
 	if (find_player(game) != 0 || validate_borders(game) != 0)
 	{
 		free_map_lines(map_lines);

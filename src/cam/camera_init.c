@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera_init.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vicperri <vicperri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/23 10:29:35 by vicperri          #+#    #+#             */
+/*   Updated: 2025/07/23 10:29:38 by vicperri         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	init_camera(t_cub3d *cub3d)
@@ -12,8 +24,6 @@ int	init_camera(t_cub3d *cub3d)
 	cub3d->camera->pos_y = (double)player->y + 0.5;
 	set_direction_from_orientation(cub3d->camera, player->orientation);
 	update_camera_plane(cub3d->camera);
-	printf("Camera initialized at (%.2f, %.2f) facing %c\n",
-		cub3d->camera->pos_x, cub3d->camera->pos_y, player->orientation);
 	return (0);
 }
 
@@ -48,8 +58,6 @@ void	update_camera_plane(t_camera *camera)
 	plane_distance = 0.60;
 	camera->plane_x = camera->dir_y * plane_distance;
 	camera->plane_y = -camera->dir_x * plane_distance;
-	printf("Camera plane set to (%.2f, %.2f)\n", camera->plane_x,
-		camera->plane_y);
 }
 
 void	cleanup_camera(t_cub3d *cub3d)

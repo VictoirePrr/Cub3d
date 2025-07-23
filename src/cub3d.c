@@ -71,6 +71,5 @@ int	init_cub3d(t_cub3d *cub3d, char *filename)
 		cleanup_error(cub3d);
 		return (1);
 	}
-	print_game_info(cub3d->game);
 	return (0);
 }

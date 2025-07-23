@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colors_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vicperri <vicperri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/23 10:29:43 by vicperri          #+#    #+#             */
+/*   Updated: 2025/07/23 10:30:01 by vicperri         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	get_texture_color(t_textures *texture, int tex_x, int tex_y)
@@ -20,13 +32,6 @@ void	put_pixel(t_cub3d *cub3d, int x, int y, int color)
 	dst = cub3d->mlx->img_data + (y * cub3d->mlx->line_length + x
 			* (cub3d->mlx->bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
-}
-
-int	create_rgb(int r, int g, int b)
-{
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (0);
-	return ((r << 16) | (g << 8) | b);
 }
 
 double	calculate_floor_ceiling_distance(int y)

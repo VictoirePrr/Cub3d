@@ -4,7 +4,7 @@
 # include "libft.h"
 # include "mlx.h"
 # include "pars.h"
-# include <X11/X.h> // commenter sur mac
+# include <X11/X.h>      // commenter sur mac
 # include <X11/keysym.h> // commenter sur mac
 # include <fcntl.h>
 # include <math.h>
@@ -13,8 +13,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-struct	s_game;
-struct	s_textures;
+struct s_game;
+struct s_textures;
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -96,7 +96,7 @@ typedef struct s_wall_params
 	int				tex_x;
 	double			step;
 	double			tex_pos;
-	double wall_distance;
+	double			wall_distance;
 }					t_wall_params;
 
 typedef struct s_cub3d
@@ -109,9 +109,8 @@ typedef struct s_cub3d
 
 }					t_cub3d;
 
-void				print_game_info(t_game *game);
-//void	setup_ray_direction(t_cub3d *cub3d, t_ray *ray);
-void	march_ray_step_by_step(t_cub3d *cub3d, t_ray *ray);
+// void	setup_ray_direction(t_cub3d *cub3d, t_ray *ray);
+void				march_ray_step_by_step(t_cub3d *cub3d, t_ray *ray);
 
 // ============== mlx_init.c ==============
 int					init_mlx(t_cub3d *cub3d);
@@ -178,7 +177,11 @@ int					init_mlx_components(t_cub3d *cub3d);
 void				cleanup_mlx_error(t_cub3d *cub3d);
 void				cleanup_error(t_cub3d *cub3d);
 
-void	setup_y_direction(t_ray *ray, double *next_y);
-void	setup_x_direction(t_ray *ray, double *next_x);
-int apply_fog(int color, double distance, double fog_start, double fog_end);
+//=============== input_utils.c========================
+long				get_time_ms(void);
+
+void				setup_y_direction(t_ray *ray, double *next_y);
+void				setup_x_direction(t_ray *ray, double *next_x);
+int					apply_fog(int color, double distance, double fog_start,
+						double fog_end);
 #endif

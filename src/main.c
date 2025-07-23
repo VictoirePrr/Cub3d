@@ -1,21 +1,6 @@
 #include "cub3d.h"
 #include "pars.h"
 
-void	print_game_info(t_game *game)
-{
-	ft_printf("=== PARSING SUCCESSFUL ===\n");
-	ft_printf("North texture: %s\n", game->north->filename);
-	ft_printf("South texture: %s\n", game->south->filename);
-	ft_printf("West texture: %s\n", game->west->filename);
-	ft_printf("East texture: %s\n", game->east->filename);
-	ft_printf("Floor color: R:%d G:%d B:%d\n", game->floor->r, game->floor->g,
-		game->floor->b);
-	ft_printf("Ceiling color: R:%d G:%d B:%d\n", game->roof->r, game->roof->g,
-		game->roof->b);
-	ft_printf("Player position: X:%d Y:%d\n", game->player->x, game->player->y);
-	ft_printf("Player orientation: %c\n", game->player->orientation);
-}
-
 int	validate_args(int argc)
 {
 	if (argc != 2)
@@ -32,7 +17,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		printf("Error: Usage: ./cub3D map.cub\n");
+		ft_printf("Error: Usage: ./cub3D map.cub\n");
 		return (1);
 	}
 	if (init_cub3d(&cub3d, argv[1]) != 0)
