@@ -24,6 +24,7 @@ CAMERA_SRC := $(addprefix $(CAMERA_DIR), \
     texture_utils.c \
 	colors_utils.c \
 	calc_utils.c \
+	cam_utils.c \
     )
 
 PARSING_SRC := $(addprefix $(PARSING_DIR), \

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pn <pn@student.42lyon.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/23 17:11:03 by pn                #+#    #+#             */
+/*   Updated: 2025/07/23 17:16:23 by pn               ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -13,8 +25,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-struct s_game;
-struct s_textures;
+struct	s_game;
+struct	s_textures;
 
 # define WIN_WIDTH 1920
 # define WIN_HEIGHT 1080
@@ -109,7 +121,9 @@ typedef struct s_cub3d
 
 }					t_cub3d;
 
-// void	setup_ray_direction(t_cub3d *cub3d, t_ray *ray);
+int	create_rgb(int r, int g, int b);
+void	draw_wall_line(t_cub3d *cub3d, int x, t_ray *ray);
+void				perform_ray_step(t_ray *ray);
 void				march_ray_step_by_step(t_cub3d *cub3d, t_ray *ray);
 
 // ============== mlx_init.c ==============
