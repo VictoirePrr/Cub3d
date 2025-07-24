@@ -6,7 +6,7 @@
 /*   By: pnaessen <pnaessen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:11:03 by pn                #+#    #+#             */
-/*   Updated: 2025/07/24 08:22:27 by pnaessen         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 11:05:01 by pnaessen         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "libft.h"
 # include "mlx.h"
 # include "pars.h"
-# include <X11/X.h>      // commenter sur mac
-# include <X11/keysym.h> // commenter sur mac
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdint.h>

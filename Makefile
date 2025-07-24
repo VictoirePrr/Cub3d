@@ -51,9 +51,7 @@ DEPS := $(OBJ:.o=.d)
 MLX_DIR := mlx/
 MLX := $(MLX_DIR)libmlx_Linux.a
 MLX_FLAG := -L $(MLX_DIR) -lmlx_Linux -L/usr/lib -I $(MLX_DIR) -lX11 -lm -lz -lXext $(MLX)
-# MLX := $(MLX_DIR)libmlx_Darwin.a
-# MLX_FLAG := -Lmlx/ -lmlx -L/opt/X11/lib -lXext -lX11 -lm
-#--> pour mac
+
 
 LIBFT_DIR := libft/
 LIBFT := $(LIBFT_DIR)libft.a
