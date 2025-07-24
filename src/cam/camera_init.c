@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vicperri <vicperri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pnaessen <pnaessen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 10:29:35 by vicperri          #+#    #+#             */
-/*   Updated: 2025/07/23 10:29:38 by vicperri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 08:24:52 by pnaessen         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,22 @@ int	init_camera(t_cub3d *cub3d)
 
 void	set_direction_from_orientation(t_camera *camera, char orientation)
 {
-	if (orientation == 'N')
+	if (orientation == 'W')
 	{
 		camera->dir_x = 0;
 		camera->dir_y = -1;
 	}
-	else if (orientation == 'S')
+	else if (orientation == 'E')
 	{
 		camera->dir_x = 0;
 		camera->dir_y = 1;
 	}
-	else if (orientation == 'E')
+	else if (orientation == 'S')
 	{
 		camera->dir_x = 1;
 		camera->dir_y = 0;
 	}
-	else if (orientation == 'W')
+	else if (orientation == 'N')
 	{
 		camera->dir_x = -1;
 		camera->dir_y = 0;

@@ -73,7 +73,7 @@ CYAN = \033[0;96m
 WHITE = \033[0;97m
 PURPLE=\033[35m
 
-$(NAME): $(OBJ)
+$(NAME): $(OBJ) $(LIBFT)
 	$(MAKE) -C $(MLX_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
 	$(CC) $(CCFLAGS) $(OBJ) $(MLX_FLAG) $(LIBFT_FLAG) -o $(NAME)
@@ -81,6 +81,12 @@ $(NAME): $(OBJ)
 	$(MAKE) kitty
 
 all: $(NAME)
+
+$(LIBFT): libft
+
+$(LIBFT):
+	@echo "$(BOLD)$(CYAN)📚 Building libft...$(DEF_COLOR)"
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(dir $@)
@@ -112,4 +118,4 @@ re: fclean all
 
 -include $(DEPS)
 
-.PHONY: all clean fclean re kitty
+.PHONY: all clean fclean re kitty libft

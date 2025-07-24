@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pn <pn@student.42lyon.fr>                  +#+  +:+       +#+        */
+/*   By: pnaessen <pnaessen@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:11:03 by pn                #+#    #+#             */
-/*   Updated: 2025/07/23 17:16:23 by pn               ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 08:22:27 by pnaessen         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ struct	s_textures;
 # define STEP_SIZE 0.05
 # define MAX_STEPS 1000
 # define ESC 65307
-# define UP 65362 // BIF BOF
 # define RIGHT 65361
 # define LEFT 65363
-# define DOWN 65364 // bif bof
 # define PI 3.14159265358979323846
 # define W 119
 # define A 97
@@ -121,8 +119,8 @@ typedef struct s_cub3d
 
 }					t_cub3d;
 
-int	create_rgb(int r, int g, int b);
-void	draw_wall_line(t_cub3d *cub3d, int x, t_ray *ray);
+int					create_rgb(int r, int g, int b);
+void				draw_wall_line(t_cub3d *cub3d, int x, t_ray *ray);
 void				perform_ray_step(t_ray *ray);
 void				march_ray_step_by_step(t_cub3d *cub3d, t_ray *ray);
 
